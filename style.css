@@ -49,19 +49,30 @@ body {
   margin: 40px auto;
 }
 .card {
+  display: flex;
   margin: 0 20px 20px 0;
-  background-color: #033a83;
   width: calc(100% / 3 - 14px);
   height: 150px;
-  border-radius: 5px;
-  color: #fff;
 }
 .card:nth-child(3n + 0) {
   margin: 0 0 20px 0;
 }
 .title {
+  color: #fff;
+  background-color: rgba(60, 74, 93, 0.9);
   padding: 10px 5px;
+  width: 50%;
+  border-radius: 5px 0 0 5px;
+  font-size: 14px;
+}
+.card:hover .title {
+  background-color: #034a5e;
+  font-weight: bold;
 }
 .card:hover {
-  background-color: #034a5e;
+  transform: scale(1.05);
+}
+.book-image {
+  width: 50%;
+  border-radius: 0 5px 5px 0;
 }

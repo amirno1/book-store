@@ -11,13 +11,25 @@ async function renderBooks(bookName) {
     .then(res =>
       res.json().then(data =>
         data.items.map((item, index) => {
-          const card = document.createElement("div");
-          const title = document.createElement("div");
-          card.className = `card ${index}`;
-          title.innerHTML = item.volumeInfo.title;
-          title.className = `title`;
-          card.appendChild(title);
-          result.appendChild(card);
+          if (item) {
+            console.log(item.volumeInfo);
+            const card = document.createElement("div");
+            const image = document.createElement("img");
+            const title = document.createElement("div");
+            card.className = `card ${index}`;
+            title.innerHTML = item.volumeInfo.title;
+            title.className = `title`;
+            item.volumeInfo.imageLinks
+              ? (image.src = `${item.volumeInfo.imageLinks.thumbnail}`)
+              : (image.src = `https://www.ottofrei.com/sc-app/extensions/VintenCloud/OttoFreiSuiteCommerceTheme/18.2.0/img/no_image_available.jpeg`);
+            image.className = "book-image";
+            card.appendChild(title);
+            card.appendChild(image);
+            result.appendChild(card);
+          } else {
+            result.innerHTML =
+              "Unfortunately Server is not ready, Please refresh the page and try again";
+          }
         })
       )
     )
@@ -26,7 +38,33 @@ async function renderBooks(bookName) {
 searchBar.addEventListener("keyup", () => {
   searchWord = searchBar.value;
 });
+searchBar.addEventListener("keypress", e => {
+  e.key === "Enter" ? ((result.innerHTML = ""), renderBooks(searchWord)) : null;
+});
 
 searchButton.addEventListener("click", () => {
+  result.innerHTML = "";
   renderBooks(searchWord);
 });
+
+// const contetnDiv = document.querySelector(".content");
+// contetnDiv.innerHTML = routes[window.location.pathname];
+
+// let homePage = `
+//   <div class="search-wrapper">
+//     <h1 class="search-header">Enter a book name to search</h1>
+//     <input
+//       class="search-bar"
+//       type="text"
+//       name="search-bar"
+//       id="search-bar"
+//     />
+//     <button class="search-button">Search</button>
+//   </div>
+//   <div class="result"></div>
+// `;
+
+// const routes = {
+//   "/": "homePage",
+//   "/book": "bookPage"
+// };
