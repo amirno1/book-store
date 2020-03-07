@@ -7,7 +7,9 @@ let searchWord = "";
 
 //do i need to do this with async await
 async function renderBooks(bookName) {
-  await fetch(`https://www.googleapis.com/books/v1/volumes?q=${bookName}`)
+  await fetch(
+    `https://www.googleapis.com/books/v1/volumes?q=${bookName}+intitle`
+  )
     .then(res =>
       res.json().then(data =>
         data.items.map((item, index) => {
@@ -17,7 +19,11 @@ async function renderBooks(bookName) {
             const image = document.createElement("img");
             const title = document.createElement("div");
             card.className = `card ${index}`;
-            title.innerHTML = item.volumeInfo.title;
+            let bookTitle = item.volumeInfo.title;
+            title.innerHTML =
+              bookTitle.length >= 100
+                ? bookTitle.slice(0, 99) + "..."
+                : bookTitle;
             title.className = `title`;
             item.volumeInfo.imageLinks
               ? (image.src = `${item.volumeInfo.imageLinks.thumbnail}`)

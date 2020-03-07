@@ -67,7 +67,6 @@ body {
 }
 .card:hover .title {
   background-color: #034a5e;
-  font-weight: bold;
 }
 .card:hover {
   transform: scale(1.05);
