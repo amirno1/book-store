@@ -67,6 +67,7 @@ body {
   width: calc(100% / 4 - 15px);
   height: 200px;
   transition: all 0.4s;
+  z-index: 1121;
 }
 .card:nth-child(4n + 0) {
   margin: 0 0 20px 0;
@@ -91,4 +92,21 @@ body {
 }
 .book-info p {
   padding: 10px 5px;
+}
+
+.book-wrapper {
+  text-align: left;
+  border-radius: 10px;
+  background: #161313;
+  color: #fff;
+  padding: 40px;
+}
+.book-info-item {
+  padding-bottom: 10px;
+}
+
+.back-home-button {
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
 }
