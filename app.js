@@ -1,13 +1,14 @@
 function main() {
-  const bookInfoItems = [
+  const bookInfoTitles = [
     "title",
     "subtitle",
     "authors",
     "publisher",
-    "categories",
     "pageCount",
+    "categories",
     "language"
   ];
+  // creating home page template
   const homePage = () => `
     <div class="search-wrapper">
       <h1 class="search-header">Enter a book name to search</h1>
@@ -22,42 +23,57 @@ function main() {
     </div>
     <div class="result"></div>`;
 
+  // Rendering book page according to what user selects
   const bookPage = book => {
     const bookWrapper = document.createElement("div");
+    bookWrapper.className = "book-wrapper";
+    const bookInfoTitlesWrapper = document.createElement("div");
+    bookInfoTitlesWrapper.className = "book-info-titles-wrapper";
+    bookWrapper.appendChild(bookInfoTitlesWrapper);
+    const bookInfoItemsWrapper = document.createElement("div");
+    bookInfoItemsWrapper.className = "book-info-items-wrapper";
     const homeButton = document.createElement("div");
     homeButton.className = "home-button";
-    bookWrapper.className = "book-wrapper";
 
+    // create info titles according to info avalibility of the book
+    const bookPageCreateTitles = title => {
+      const bookInfoItemtitle = document.createElement("div");
+      bookInfoItemtitle.className = "book-info-title";
+      bookInfoItemtitle.innerHTML =
+        title[0].toLocaleUpperCase() + title.slice(1) + ":";
+      bookInfoTitlesWrapper.appendChild(bookInfoItemtitle);
+    };
+
+    // Take only the information we need out of the respond we get from api
     Object.keys(book.volumeInfo).map(bookInfoItemKey => {
-      if (bookInfoItems.includes(bookInfoItemKey)) {
+      if (bookInfoTitles.includes(bookInfoItemKey)) {
+        bookPageCreateTitles(bookInfoItemKey);
         if (!Array.isArray(book.volumeInfo[bookInfoItemKey])) {
           let bookCurrentItem = document.createElement("div");
           bookCurrentItem.className = "book-info-item";
-          bookCurrentItem.innerHTML = `${bookInfoItemKey.toLocaleUpperCase()}: ${
-            book.volumeInfo[bookInfoItemKey]
-          }`;
-          bookWrapper.appendChild(bookCurrentItem);
+          bookCurrentItem.innerHTML =
+            book.volumeInfo[bookInfoItemKey].toString().length <= 85
+              ? `${book.volumeInfo[bookInfoItemKey]}`
+              : `${book.volumeInfo[bookInfoItemKey].slice(0, 85)}...`;
+          bookInfoItemsWrapper.appendChild(bookCurrentItem);
         } else {
           let bookCurrentItemsWrapper = document.createElement("div");
           bookCurrentItemsWrapper.className = "book-info-item";
-          bookCurrentItemsWrapper.innerHTML = `${bookInfoItemKey.toLocaleUpperCase()}: `;
           book.volumeInfo[bookInfoItemKey].forEach(item => {
             let bookCurrentItem = `${item} `;
             bookCurrentItemsWrapper.innerHTML += bookCurrentItem;
           });
-          bookWrapper.appendChild(bookCurrentItemsWrapper);
+          bookInfoItemsWrapper.appendChild(bookCurrentItemsWrapper);
         }
       }
     });
-    const backToHome = document.createElement("button");
-    backToHome.className = "back-home-button";
-    backToHome.innerHTML = "Home";
-    bookWrapper.appendChild(backToHome);
+    bookWrapper.appendChild(bookInfoItemsWrapper);
     return bookWrapper;
   };
 
   let searchWord = "";
 
+  // Fetching the chosen book information
   const renderBook = async bookId => {
     const mainWrapper = document.querySelector(".main-wrapper");
     try {
@@ -67,10 +83,9 @@ function main() {
       if (res.ok) {
         const data = await res.json();
         if (data) {
+          // console.log(data);
           mainWrapper.innerHTML = "";
           mainWrapper.appendChild(bookPage(data));
-          const homeButton = document.querySelector(".back-home-button");
-          homeButton.addEventListener("click", renderHome);
         } else {
           mainWrapper.innerHTML = "We could not find this book";
         }
@@ -79,6 +94,14 @@ function main() {
       console.log(error);
       mainWrapper.innerHTML = "Something went wrong";
     }
+    const backToHome = document.createElement("button");
+    backToHome.className = "back-home-button";
+    backToHome.innerHTML = "Home";
+    backToHome.addEventListener("click", () => {
+      window.history.pushState({}, null, `/`);
+      renderHome();
+    });
+    mainWrapper.appendChild(backToHome);
   };
 
   function renderHome() {
@@ -95,7 +118,6 @@ function main() {
     });
 
     searchBar.addEventListener("click", () => {
-      searchBar.style.border = "";
       searchWord = "";
     });
 
@@ -113,6 +135,8 @@ function main() {
   }
 
   renderHome();
+
+  // Render all the books that has the search woord in it
   async function renderBooks(bookName) {
     if (searchWord) {
       const res = await fetch(
@@ -155,6 +179,7 @@ function main() {
     }
   }
 
+  // check whether the search bar is empty or not
   const checkForWarning = () => {
     const warning = document.querySelector(".warning");
     const searchBar = document.querySelector(".search-bar");

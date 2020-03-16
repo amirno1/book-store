@@ -45,6 +45,7 @@ body {
   border-radius: 5px;
   background-color: #034a5e90;
   color: #fff;
+  cursor: pointer;
 }
 .search-button:hover {
   background-color: #034a5e;
@@ -95,18 +96,29 @@ body {
 }
 
 .book-wrapper {
+  display: flex;
   text-align: left;
   border-radius: 10px;
   background: #161313;
   color: #fff;
   padding: 40px;
+  margin-bottom: 20px;
 }
+.book-info-title,
 .book-info-item {
   padding-bottom: 10px;
 }
-
+.book-info-titles-wrapper {
+  margin-right: 20px;
+}
 .back-home-button {
-  padding: 10px;
+  padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
+  font-size: 18px;
+  color: #fff;
+  background-color: #034a5e90;
+}
+.back-home-button:hover {
+  background-color: #034a5e;
 }
