@@ -60,6 +60,7 @@ body {
   margin: 40px auto;
 }
 .card {
+  position: relative;
   display: flex;
   cursor: pointer;
   flex-direction: column;
@@ -86,6 +87,9 @@ body {
 }
 .card:hover {
   transform: scale(1.05);
+}
+.card:hover .add-button {
+  opacity: 1;
 }
 .book-image {
   border-radius: 5px 5px 0 0;
@@ -121,4 +125,20 @@ body {
 }
 .back-home-button:hover {
   background-color: #034a5e;
+}
+.add-button {
+  position: absolute;
+  background-color: #6c9a36;
+  color: #42493a;
+  font-weight: bold;
+  font-size: 20px;
+  top: 5%;
+  padding: 5px;
+  border-radius: 0 5px 5px 0;
+  transition: all 0.5s;
+  opacity: 0;
+}
+
+.add-button:hover {
+  padding: 5px 30px;
 }
