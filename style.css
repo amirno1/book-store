@@ -46,6 +46,7 @@ body {
   background-color: #034a5e90;
   color: #fff;
   cursor: pointer;
+  transition: all 0.3s;
 }
 .search-button:hover {
   background-color: #034a5e;
@@ -141,4 +142,25 @@ body {
 
 .add-button:hover {
   padding: 5px 30px;
+}
+.fa-cart-arrow-down {
+  position: fixed;
+  right: 5%;
+  font-size: 25px;
+  background-color: #0b57a0;
+  color: #fffd14;
+  padding: 5px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.fa-cart-arrow-down:hover {
+  background-color: #063969;
+}
+.fa-cart-arrow-down:active {
+  transform: translateY(4px);
+}
+.cart-amount {
+  font-size: 15px;
+  padding-left: 5px;
 }

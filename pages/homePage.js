@@ -4,6 +4,7 @@ let cart = [];
 // creating home page template
 const homePageTemplate = () => `
     <div class="search-wrapper">
+      <div class="fas fa-cart-arrow-down"><span class="cart-amount">0</span></div>
       <h1 class="search-header">Enter a book name to search</h1>
       <input
         class="search-bar"
@@ -18,19 +19,31 @@ const homePageTemplate = () => `
 
 // add The book to the cart
 const addToCard = item => {
-  let currentBook = {
-    id: item.id,
-    title: item.volumeInfo.title,
-    authors: item.volumeInfo.authors[0],
-    image: item.volumeInfo.imageLinks.thumbnail
-  };
-  cart.push(currentBook);
-  console.log(cart);
+  const alreadyExisted = checkIfAlreadyAdded(item.id);
+  if (!alreadyExisted) {
+    let currentBook = {
+      id: item.id,
+      title: item.volumeInfo.title,
+      authors: item.volumeInfo.authors ? item.volumeInfo.authors[0] : "Unknown",
+      image: item.volumeInfo.imageLinks.thumbnail
+    };
+    cart.push(currentBook);
+    console.log(cart);
+  }
 };
 
 const removeFromCart = itemId => {
   cart = cart.filter(cartItem => cartItem.id !== itemId);
   console.log(cart);
+};
+
+const checkIfAlreadyAdded = itemId => {
+  const alreadyExisted = cart.filter(cartItem => cartItem.id === itemId);
+  if (alreadyExisted.length !== 0) {
+    return true;
+  } else {
+    return false;
+  }
 };
 
 // render home page template
@@ -71,24 +84,30 @@ async function renderBooks(bookName) {
     const data = await res.json();
     data.items.forEach((item, index) => {
       if (item) {
-        let isActive;
+        let isAdded;
         const card = document.createElement("div");
         card.className = `card ${index}`;
 
         const addButton = document.createElement("span");
         addButton.className = "add-button";
         addButton.innerHTML = "+";
+        if (checkIfAlreadyAdded(item.id)) {
+          addButton.style.backgroundColor = "#F43E00";
+          isAdded = true;
+        }
         addButton.addEventListener("click", e => {
           e.stopPropagation();
-          if (isActive) {
+          const cartAmount = document.querySelector(".cart-amount");
+          if (isAdded) {
             addButton.style.backgroundColor = "#6c9a36";
             removeFromCart(item.id);
           } else {
-            addButton.style.backgroundColor = !isActive ? "#F43E00" : "#6c9a36";
+            addButton.style.backgroundColor = !isAdded ? "#F43E00" : "#6c9a36";
             addToCard(item);
           }
-          isActive = !isActive;
-          addButton.innerHTML = !isActive ? "+" : "x";
+          cartAmount.innerHTML = cart.length;
+          isAdded = !isAdded;
+          addButton.innerHTML = !isAdded ? "+" : "x";
         });
 
         card.appendChild(addButton);
