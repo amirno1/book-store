@@ -19,11 +19,17 @@ const homePageTemplate = () => `
 // add The book to the cart
 const addToCard = item => {
   let currentBook = {
+    id: item.id,
     title: item.volumeInfo.title,
     authors: item.volumeInfo.authors[0],
     image: item.volumeInfo.imageLinks.thumbnail
   };
   cart.push(currentBook);
+  console.log(cart);
+};
+
+const removeFromCart = itemId => {
+  cart = cart.filter(cartItem => cartItem.id !== itemId);
   console.log(cart);
 };
 
@@ -65,6 +71,7 @@ async function renderBooks(bookName) {
     const data = await res.json();
     data.items.forEach((item, index) => {
       if (item) {
+        let isActive;
         const card = document.createElement("div");
         card.className = `card ${index}`;
 
@@ -73,8 +80,17 @@ async function renderBooks(bookName) {
         addButton.innerHTML = "+";
         addButton.addEventListener("click", e => {
           e.stopPropagation();
-          addToCard(item);
+          if (isActive) {
+            addButton.style.backgroundColor = "#6c9a36";
+            removeFromCart(item.id);
+          } else {
+            addButton.style.backgroundColor = !isActive ? "#F43E00" : "#6c9a36";
+            addToCard(item);
+          }
+          isActive = !isActive;
+          addButton.innerHTML = !isActive ? "+" : "x";
         });
+
         card.appendChild(addButton);
 
         const image = document.createElement("img");
