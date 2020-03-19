@@ -1,10 +1,12 @@
+// function main() {
 let searchWord = "";
 let cart = [];
+let cachedData;
 
 // creating home page template
 const homePageTemplate = () => `
     <div class="search-wrapper">
-      <div class="fas fa-cart-arrow-down"><span class="cart-amount">0</span></div>
+      <div class="fas fa-cart-arrow-down"><span class="cart-amount">${cart.length}</span></div>
       <h1 class="search-header">Enter a book name to search</h1>
       <input
         class="search-bar"
@@ -28,13 +30,11 @@ const addToCard = item => {
       image: item.volumeInfo.imageLinks.thumbnail
     };
     cart.push(currentBook);
-    console.log(cart);
   }
 };
 
 const removeFromCart = itemId => {
   cart = cart.filter(cartItem => cartItem.id !== itemId);
-  console.log(cart);
 };
 
 const checkIfAlreadyAdded = itemId => {
@@ -45,7 +45,14 @@ const checkIfAlreadyAdded = itemId => {
     return false;
   }
 };
+const createElement = (elementType, attributes) => {
+  const element = document.createElement(elementType);
 
+  for (key in attributes) {
+    element.setAttribute(key, attributes[key]);
+  }
+  return element;
+};
 // render home page template
 function renderHome() {
   const mainWrapper = document.querySelector(".main-wrapper");
@@ -63,62 +70,83 @@ function renderHome() {
   searchBar.addEventListener("keypress", e => {
     if (e.key === "Enter") {
       result.innerHTML = "";
+      cachedData = null;
       renderBooks(searchWord);
     }
   });
 
   searchButton.addEventListener("click", () => {
     result.innerHTML = "";
+    cachedData = null;
     renderBooks(searchWord);
   });
 }
 
-renderHome();
-
-// Render all the books that has the search woord in it
-async function renderBooks(bookName) {
-  if (searchWord) {
+const fetchBooks = async bookName => {
+  if (!cachedData) {
     const res = await fetch(
       `https://www.googleapis.com/books/v1/volumes?q=${bookName}`
     );
     const data = await res.json();
-    data.items.forEach((item, index) => {
+    cachedData = data;
+  }
+  return cachedData;
+};
+
+const appendChilderen = (element, children) => {
+  children.forEach(child => {
+    if (typeof child === "string") {
+      element.appendChild(document.createTextNode(child));
+    } else {
+      element.appendChild(child);
+    }
+  });
+  return element;
+};
+
+// Render all the books that has the search woord in it
+async function renderBooks(bookName) {
+  if (searchWord) {
+    const data = await fetchBooks(bookName);
+    data.items.forEach(item => {
       if (item) {
         let isAdded;
-        const card = document.createElement("div");
-        card.className = `card ${index}`;
+        const card = createElement("div", { class: "card" }, [Image, bookInfo]);
 
-        const addButton = document.createElement("span");
-        addButton.className = "add-button";
-        addButton.innerHTML = "+";
+        const addOrRemoveButton = createElement("span", {
+          class: "add-remove-button"
+        });
+
         if (checkIfAlreadyAdded(item.id)) {
-          addButton.style.backgroundColor = "#F43E00";
+          addOrRemoveButton.style.backgroundColor = "#F43E00";
           isAdded = true;
         }
-        addButton.addEventListener("click", e => {
+        addOrRemoveButton.innerHTML = isAdded ? "x" : "+";
+        addOrRemoveButton.addEventListener("click", e => {
           e.stopPropagation();
           const cartAmount = document.querySelector(".cart-amount");
           if (isAdded) {
-            addButton.style.backgroundColor = "#6c9a36";
+            addOrRemoveButton.style.backgroundColor = "#6c9a36";
             removeFromCart(item.id);
+            addOrRemoveButton.innerHTML = "+";
           } else {
-            addButton.style.backgroundColor = !isAdded ? "#F43E00" : "#6c9a36";
+            addOrRemoveButton.style.backgroundColor = !isAdded
+              ? "#F43E00"
+              : "#6c9a36";
             addToCard(item);
+            addOrRemoveButton.innerHTML = "x";
           }
           cartAmount.innerHTML = cart.length;
           isAdded = !isAdded;
-          addButton.innerHTML = !isAdded ? "+" : "x";
         });
 
-        card.appendChild(addButton);
+        card.appendChild(addOrRemoveButton);
 
-        const image = document.createElement("img");
-        image.className = "book-image";
+        const image = createElement("img", { class: "book-image" });
 
-        const bookInfo = document.createElement("div");
-        bookInfo.className = "book-info";
+        var bookInfo = createElement("div", { class: "book-info" });
 
-        const title = document.createElement("p");
+        const title = createElement("p");
 
         let bookTitle = item.volumeInfo.title;
 
@@ -129,8 +157,7 @@ async function renderBooks(bookName) {
           : (image.src = `https://www.ottofrei.com/sc-app/extensions/VintenCloud/OttoFreiSuiteCommerceTheme/18.2.0/img/no_image_available.jpeg`);
 
         bookInfo.appendChild(title);
-        card.appendChild(image);
-        card.appendChild(bookInfo);
+        appendChilderen(card, [image, bookInfo]);
 
         card.addEventListener("click", () => {
           window.history.pushState({}, null, `/book?id=${item.id}`);
@@ -164,3 +191,16 @@ const checkForWarning = () => {
     searchBar.style.border = "2px solid red";
   }
 };
+
+const renderApp = () => {
+  if (window.location.pathname === "/") {
+    renderHome();
+  } else if (window.location.pathname === "/book") {
+    renderBook(window.location.search.slice(4));
+  }
+};
+
+renderApp();
+// }
+
+// window.onload = main();

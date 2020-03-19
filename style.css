@@ -89,7 +89,7 @@ body {
 .card:hover {
   transform: scale(1.05);
 }
-.card:hover .add-button {
+.card:hover .add-remove-button {
   opacity: 1;
 }
 .book-image {
@@ -127,7 +127,7 @@ body {
 .back-home-button:hover {
   background-color: #034a5e;
 }
-.add-button {
+.add-remove-button {
   position: absolute;
   background-color: #6c9a36;
   color: #42493a;
@@ -140,7 +140,7 @@ body {
   opacity: 0;
 }
 
-.add-button:hover {
+.add-remove-button:hover {
   padding: 5px 30px;
 }
 .fa-cart-arrow-down {

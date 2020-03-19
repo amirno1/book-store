@@ -10,20 +10,25 @@ const bookInfoTitles = [
 
 // Rendering book page according to what user selects
 const bookPageTemplate = book => {
-  const bookWrapper = document.createElement("div");
-  bookWrapper.className = "book-wrapper";
-  const bookInfoTitlesWrapper = document.createElement("div");
-  bookInfoTitlesWrapper.className = "book-info-titles-wrapper";
+  const bookWrapper = createElement("div", { class: "book-wrapper" });
+
+  const bookInfoTitlesWrapper = createElement("div", {
+    class: "book-info-titles-wrapper"
+  });
+
   bookWrapper.appendChild(bookInfoTitlesWrapper);
-  const bookInfoItemsWrapper = document.createElement("div");
-  bookInfoItemsWrapper.className = "book-info-items-wrapper";
-  const homeButton = document.createElement("div");
-  homeButton.className = "home-button";
+  const bookInfoItemsWrapper = createElement("div", {
+    class: "book-info-items-wrapper"
+  });
+
+  // const homeButton = createElement("div", { class: "home-button" });
 
   // create info titles according to info avalibility of the book
   const bookPageCreateTitles = title => {
-    const bookInfoItemtitle = document.createElement("div");
-    bookInfoItemtitle.className = "book-info-title";
+    const bookInfoItemtitle = createElement("div", {
+      class: "book-info-title"
+    });
+
     bookInfoItemtitle.innerHTML =
       title[0].toLocaleUpperCase() + title.slice(1) + ":";
     bookInfoTitlesWrapper.appendChild(bookInfoItemtitle);
@@ -34,15 +39,17 @@ const bookPageTemplate = book => {
     if (bookInfoTitles.includes(bookInfoItemKey)) {
       bookPageCreateTitles(bookInfoItemKey);
       if (!Array.isArray(book.volumeInfo[bookInfoItemKey])) {
-        let bookCurrentItem = document.createElement("div");
-        bookCurrentItem.className = "book-info-item";
+        let bookCurrentItem = createElement("div", { class: "book-info-item" });
+
         bookCurrentItem.innerHTML =
           book.volumeInfo[bookInfoItemKey].toString().length <= 85
             ? `${book.volumeInfo[bookInfoItemKey]}`
             : `${book.volumeInfo[bookInfoItemKey].slice(0, 82)}...`;
         bookInfoItemsWrapper.appendChild(bookCurrentItem);
       } else {
-        let bookCurrentItemsWrapper = document.createElement("div");
+        let bookCurrentItemsWrapper = createElement("div", {
+          class: "book-info-item"
+        });
         bookCurrentItemsWrapper.className = "book-info-item";
         book.volumeInfo[bookInfoItemKey].forEach(item => {
           let bookCurrentItem = `${item} `;
@@ -80,11 +87,14 @@ const renderBook = async bookId => {
     }
   } catch (error) {
     console.log(error);
-    mainWrapper.innerHTML = "Something went wrong";
+    mainWrapper.innerHTML = "<div>Something went wrong</div>";
   }
-  const backToHome = document.createElement("button");
-  backToHome.className = "back-home-button";
+
+  const backToHome = createElement("button", {
+    class: "back-home-button"
+  });
   backToHome.innerHTML = "Home";
+
   backToHome.addEventListener("click", () => {
     window.history.pushState({}, null, `/`);
     renderHome();
