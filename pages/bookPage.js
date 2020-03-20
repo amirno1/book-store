@@ -12,16 +12,25 @@ const bookInfoTitles = [
 const bookPageTemplate = book => {
   const bookWrapper = createElement("div", { class: "book-wrapper" });
 
+  const bookInfoWrapper = createElement("div", {
+    class: "book-info-wrapper"
+  });
   const bookInfoTitlesWrapper = createElement("div", {
     class: "book-info-titles-wrapper"
   });
 
-  bookWrapper.appendChild(bookInfoTitlesWrapper);
   const bookInfoItemsWrapper = createElement("div", {
     class: "book-info-items-wrapper"
   });
 
-  // const homeButton = createElement("div", { class: "home-button" });
+  const bookImageWrapper = createElement("div", {
+    class: "book-image-wrapper"
+  });
+
+  const bookImage = createElement("img", {
+    src: book.volumeInfo.imageLinks.thumbnail
+  });
+  bookImageWrapper.appendChild(bookImage);
 
   // create info titles according to info avalibility of the book
   const bookPageCreateTitles = title => {
@@ -39,15 +48,15 @@ const bookPageTemplate = book => {
     if (bookInfoTitles.includes(bookInfoItemKey)) {
       bookPageCreateTitles(bookInfoItemKey);
       if (!Array.isArray(book.volumeInfo[bookInfoItemKey])) {
-        let bookCurrentItem = createElement("div", { class: "book-info-item" });
+        let bookCurrentItem = createElement("p", { class: "book-info-item" });
 
         bookCurrentItem.innerHTML =
-          book.volumeInfo[bookInfoItemKey].toString().length <= 85
+          book.volumeInfo[bookInfoItemKey].toString().length <= 80
             ? `${book.volumeInfo[bookInfoItemKey]}`
-            : `${book.volumeInfo[bookInfoItemKey].slice(0, 82)}...`;
+            : `${book.volumeInfo[bookInfoItemKey].slice(0, 77)}...`;
         bookInfoItemsWrapper.appendChild(bookCurrentItem);
       } else {
-        let bookCurrentItemsWrapper = createElement("div", {
+        let bookCurrentItemsWrapper = createElement("p", {
           class: "book-info-item"
         });
         bookCurrentItemsWrapper.className = "book-info-item";
@@ -55,17 +64,20 @@ const bookPageTemplate = book => {
           let bookCurrentItem = `${item} `;
           bookCurrentItemsWrapper.innerHTML += bookCurrentItem;
         });
-        if (bookCurrentItemsWrapper.innerHTML.length >= 85) {
+        if (bookCurrentItemsWrapper.innerHTML.length >= 80) {
           bookCurrentItemsWrapper.innerHTML = `${bookCurrentItemsWrapper.innerHTML.slice(
             0,
-            82
+            77
           )}...`;
         }
         bookInfoItemsWrapper.appendChild(bookCurrentItemsWrapper);
       }
     }
   });
-  bookWrapper.appendChild(bookInfoItemsWrapper);
+  bookInfoWrapper.appendChild(bookInfoTitlesWrapper);
+  bookInfoWrapper.appendChild(bookInfoItemsWrapper);
+  bookWrapper.appendChild(bookInfoWrapper);
+  bookWrapper.appendChild(bookImageWrapper);
   return bookWrapper;
 };
 

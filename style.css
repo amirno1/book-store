@@ -5,7 +5,7 @@
 }
 
 body {
-  background: url("books.jpeg") no-repeat center fixed;
+  background: url("book3.jpeg") no-repeat center fixed;
   background-size: cover;
 }
 .main-wrapper {
@@ -102,6 +102,7 @@ body {
 
 .book-wrapper {
   display: flex;
+  justify-content: space-between;
   text-align: left;
   border-radius: 10px;
   background: #161313;
@@ -109,11 +110,20 @@ body {
   padding: 40px;
   margin-bottom: 20px;
 }
+.book-info-wrapper {
+  display: flex;
+}
+.book-image-wrapper img {
+  max-height: 170px;
+}
 .book-info-title,
 .book-info-item {
   padding-bottom: 10px;
 }
 .book-info-titles-wrapper {
+  margin-right: 20px;
+}
+.book-info-items-wrapper {
   margin-right: 20px;
 }
 .back-home-button {

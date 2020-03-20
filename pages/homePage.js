@@ -1,4 +1,3 @@
-// function main() {
 let searchWord = "";
 let cart = [];
 let cachedData;
@@ -192,15 +191,4 @@ const checkForWarning = () => {
   }
 };
 
-const renderApp = () => {
-  if (window.location.pathname === "/") {
-    renderHome();
-  } else if (window.location.pathname === "/book") {
-    renderBook(window.location.search.slice(4));
-  }
-};
-
-renderApp();
-// }
-
-// window.onload = main();
+renderHome();
