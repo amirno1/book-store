@@ -1,6 +1,6 @@
 let searchWord = "";
 let cart = [];
-let cachedData;
+let cachedBooks;
 
 // creating home page template
 const homePageTemplate = () => `
@@ -60,6 +60,9 @@ function renderHome() {
   const searchBar = document.querySelector(".search-bar");
   const searchButton = document.querySelector(".search-button");
   const result = document.querySelector(".result");
+  if (searchWord) {
+    searchBar.value = searchWord;
+  }
 
   searchBar.addEventListener("keyup", () => {
     searchWord = searchBar.value;
@@ -69,27 +72,27 @@ function renderHome() {
   searchBar.addEventListener("keypress", e => {
     if (e.key === "Enter") {
       result.innerHTML = "";
-      cachedData = null;
+      cachedBooks = null;
       renderBooks(searchWord);
     }
   });
 
   searchButton.addEventListener("click", () => {
     result.innerHTML = "";
-    cachedData = null;
+    cachedBooks = null;
     renderBooks(searchWord);
   });
 }
 
 const fetchBooks = async bookName => {
-  if (!cachedData) {
+  if (!cachedBooks) {
     const res = await fetch(
       `https://www.googleapis.com/books/v1/volumes?q=${bookName}`
     );
     const data = await res.json();
-    cachedData = data;
+    cachedBooks = data;
   }
-  return cachedData;
+  return cachedBooks;
 };
 
 const appendChilderen = (element, children) => {

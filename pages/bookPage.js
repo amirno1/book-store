@@ -8,6 +8,8 @@ const bookInfoTitles = [
   "language"
 ];
 
+let cachedBook;
+
 // Rendering book page according to what user selects
 const bookPageTemplate = book => {
   const bookWrapper = createElement("div", { class: "book-wrapper" });
@@ -80,22 +82,26 @@ const bookPageTemplate = book => {
   bookWrapper.appendChild(bookImageWrapper);
   return bookWrapper;
 };
-
+const fetchBook = async bookId => {
+  if (!cachedBook) {
+    const bookData = await fetch(
+      `https://www.googleapis.com/books/v1/volumes/${bookId}`
+    );
+    const bookInfo = await bookData.json();
+    cachedBook = bookInfo;
+  }
+  return cachedBook;
+};
 // Fetching the chosen book information
 const renderBook = async bookId => {
   const mainWrapper = document.querySelector(".main-wrapper");
   try {
-    const res = await fetch(
-      `https://www.googleapis.com/books/v1/volumes/${bookId}`
-    );
-    if (res.ok) {
-      const data = await res.json();
-      if (data) {
-        mainWrapper.innerHTML = "";
-        mainWrapper.appendChild(bookPageTemplate(data));
-      } else {
-        mainWrapper.innerHTML = "We could not find this book";
-      }
+    const res = await fetchBook(bookId);
+    if (res) {
+      mainWrapper.innerHTML = "";
+      mainWrapper.appendChild(bookPageTemplate(res));
+    } else {
+      mainWrapper.innerHTML = "We could not find this book";
     }
   } catch (error) {
     console.log(error);
