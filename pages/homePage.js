@@ -28,14 +28,27 @@ const addToCard = item => {
   if (!alreadyExisted) {
     let currentBook = {
       id: item.id,
-      title: item.volumeInfo.title,
+      title:
+        item.volumeInfo.title.length < 25
+          ? item.volumeInfo.title
+          : item.volumeInfo.title.slice(0, 25) + "...",
       authors: item.volumeInfo.authors ? item.volumeInfo.authors[0] : "Unknown",
       image: item.volumeInfo.imageLinks
         ? item.volumeInfo.imageLinks.thumbnail
         : "https://www.ottofrei.com/sc-app/extensions/VintenCloud/OttoFreiSuiteCommerceTheme/18.2.0/img/no_image_available.jpeg"
     };
     cart.push(currentBook);
-    let cartItem = `<div class="cart-item"><p>Title: ${currentBook.title}</p></div>`;
+    let cartItem = `
+    <div class="cart-item">
+      <div class="cart-item-amount-wrapper">
+        <span class="cart-item-amount-minus">-</span>
+        <span class="cart-item-amount">1</span>
+        <span class="cart-item-amount-plus">+</span>
+      </div>
+      <p>${currentBook.title}</p>
+      <img src=${currentBook.image}>
+    </div>
+    `;
     cartBox.innerHTML += cartItem;
   }
 };
@@ -135,12 +148,13 @@ async function renderBooks(bookName) {
         addOrRemoveButton.addEventListener("click", e => {
           e.stopPropagation();
           const cartAmount = document.querySelector(".cart-amount");
+          const cartBox = document.querySelector(".cart-box");
           if (isAdded) {
             addOrRemoveButton.style.backgroundColor = "#6c9a36";
             removeFromCart(item.id);
             addOrRemoveButton.innerHTML = "+";
           } else {
-            cartShown = true;
+            cartBox.style.opacity = "1";
             addOrRemoveButton.style.backgroundColor = !isAdded
               ? "#F43E00"
               : "#6c9a36";
@@ -149,7 +163,7 @@ async function renderBooks(bookName) {
           }
           cartAmount.innerHTML = cart.length;
           if (cart.length === 0) {
-            cartShown = false;
+            cartBox.style.opacity = "0";
           }
           isAdded = !isAdded;
         });
