@@ -83,7 +83,7 @@ const bookPageTemplate = book => {
   return bookWrapper;
 };
 const fetchBook = async bookId => {
-  if (!cachedBook) {
+  if (!cachedBook || bookId !== cachedBook.id) {
     const bookData = await fetch(
       `https://www.googleapis.com/books/v1/volumes/${bookId}`
     );

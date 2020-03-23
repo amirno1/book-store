@@ -114,7 +114,9 @@ body {
   display: flex;
 }
 .book-image-wrapper img {
+  width: 150px;
   max-height: 170px;
+  border-radius: 3px;
 }
 .book-info-title,
 .book-info-item {
