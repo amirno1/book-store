@@ -1,11 +1,14 @@
 let searchWord = "";
 let cart = [];
+let cartShown;
 let cachedBooks;
 
 // creating home page template
 const homePageTemplate = () => `
     <div class="search-wrapper">
       <div class="fas fa-cart-arrow-down"><span class="cart-amount">${cart.length}</span></div>
+      <div class="cart-box"></div>
+      </div>
       <h1 class="search-header">Enter a book name to search</h1>
       <input
         class="search-bar"
@@ -20,15 +23,20 @@ const homePageTemplate = () => `
 
 // add The book to the cart
 const addToCard = item => {
+  const cartBox = document.querySelector(".cart-box");
   const alreadyExisted = checkIfAlreadyAdded(item.id);
   if (!alreadyExisted) {
     let currentBook = {
       id: item.id,
       title: item.volumeInfo.title,
       authors: item.volumeInfo.authors ? item.volumeInfo.authors[0] : "Unknown",
-      image: item.volumeInfo.imageLinks.thumbnail
+      image: item.volumeInfo.imageLinks
+        ? item.volumeInfo.imageLinks.thumbnail
+        : "https://www.ottofrei.com/sc-app/extensions/VintenCloud/OttoFreiSuiteCommerceTheme/18.2.0/img/no_image_available.jpeg"
     };
     cart.push(currentBook);
+    let cartItem = `<div class="cart-item"><p>Title: ${currentBook.title}</p></div>`;
+    cartBox.innerHTML += cartItem;
   }
 };
 
@@ -132,6 +140,7 @@ async function renderBooks(bookName) {
             removeFromCart(item.id);
             addOrRemoveButton.innerHTML = "+";
           } else {
+            cartShown = true;
             addOrRemoveButton.style.backgroundColor = !isAdded
               ? "#F43E00"
               : "#6c9a36";
@@ -139,6 +148,9 @@ async function renderBooks(bookName) {
             addOrRemoveButton.innerHTML = "x";
           }
           cartAmount.innerHTML = cart.length;
+          if (cart.length === 0) {
+            cartShown = false;
+          }
           isAdded = !isAdded;
         });
 
