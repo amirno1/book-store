@@ -21,13 +21,13 @@ const homePageTemplate = () => `
     </div>
     <div class="result"></div>`;
 
-// add The book to the cart
-const addToCard = item => {
+const addToCart = item => {
   const cartBox = document.querySelector(".cart-box");
   const alreadyExisted = checkIfAlreadyAdded(item.id);
   if (!alreadyExisted) {
     let currentBook = {
       id: item.id,
+      amount: 1,
       title:
         item.volumeInfo.title.length < 25
           ? item.volumeInfo.title
@@ -38,18 +38,52 @@ const addToCard = item => {
         : "https://www.ottofrei.com/sc-app/extensions/VintenCloud/OttoFreiSuiteCommerceTheme/18.2.0/img/no_image_available.jpeg"
     };
     cart.push(currentBook);
-    let cartItem = `
-    <div class="cart-item">
-      <div class="cart-item-amount-wrapper">
-        <span class="cart-item-amount-minus">-</span>
-        <span class="cart-item-amount">1</span>
-        <span class="cart-item-amount-plus">+</span>
-      </div>
-      <p>${currentBook.title}</p>
-      <img src=${currentBook.image}>
-    </div>
-    `;
-    cartBox.innerHTML += cartItem;
+
+    const cartItem = createElement("div", {
+      class: "cart-item",
+      "data-item-id": currentBook.id
+    });
+    const cartItemAmountWrapper = createElement("div", {
+      class: "cart-item-amount-wrapper"
+    });
+    const cartItemAmountMinus = createElement("span", {
+      class: "cart-item-amount-minus"
+    });
+    cartItemAmountMinus.innerHTML = "-";
+    const cartItemAmount = createElement("span", {
+      class: "cart-item-amount"
+    });
+    const cartItemTitle = createElement("p", {
+      class: "cart-item-title"
+    });
+    cartItemTitle.innerHTML = currentBook.title;
+
+    const cartItemImage = createElement("img", {
+      class: "cart-item-amount"
+    });
+    cartItemImage.src = currentBook.image;
+
+    cartItemAmount.innerHTML = currentBook.amount;
+    const cartItemAmountPlus = createElement("span", {
+      class: "cart-item-amount-plus"
+    });
+    cartItemAmountPlus.innerHTML = "+";
+
+    appendChilderen(cartItemAmountWrapper, [
+      cartItemAmountMinus,
+      cartItemAmount,
+      cartItemAmountPlus
+    ]);
+    cartItem.appendChild(cartItemAmountWrapper);
+    appendChilderen(cartItem, [cartItemTitle, cartItemImage]);
+    cartBox.appendChild(cartItem);
+
+    cartItemAmountMinus.addEventListener("click", () => {
+      cartItemAmount.innerHTML = currentBook.amount -= 1;
+    });
+    cartItemAmountPlus.addEventListener("click", () => {
+      cartItemAmount.innerHTML = currentBook.amount += 1;
+    });
   }
 };
 
@@ -158,7 +192,7 @@ async function renderBooks(bookName) {
             addOrRemoveButton.style.backgroundColor = !isAdded
               ? "#F43E00"
               : "#6c9a36";
-            addToCard(item);
+            addToCart(item);
             addOrRemoveButton.innerHTML = "x";
           }
           cartAmount.innerHTML = cart.length;
