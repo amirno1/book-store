@@ -41,7 +41,7 @@ const addToCart = item => {
 
     const cartItem = createElement("div", {
       class: "cart-item",
-      "data-item-id": currentBook.id
+      "data-cart-item-id": currentBook.id
     });
     const cartItemAmountWrapper = createElement("div", {
       class: "cart-item-amount-wrapper"
@@ -79,7 +79,11 @@ const addToCart = item => {
     cartBox.appendChild(cartItem);
 
     cartItemAmountMinus.addEventListener("click", () => {
-      cartItemAmount.innerHTML = currentBook.amount -= 1;
+      if (currentBook.amount > 1) {
+        cartItemAmount.innerHTML = currentBook.amount -= 1;
+      } else {
+        removeFromCart(currentBook);
+      }
     });
     cartItemAmountPlus.addEventListener("click", () => {
       cartItemAmount.innerHTML = currentBook.amount += 1;
@@ -87,8 +91,19 @@ const addToCart = item => {
   }
 };
 
-const removeFromCart = itemId => {
-  cart = cart.filter(cartItem => cartItem.id !== itemId);
+const removeFromCart = item => {
+  cart = cart.filter(cartItem => cartItem.id !== item.id);
+  const cartBoxItem = document.querySelector(`[data-cart-item-id=${item.id}]`);
+  const cardItemButton = document.querySelector(
+    `[data-card-item-id=${item.id}]`
+  );
+  cartBoxItem.parentElement.removeChild(cartBoxItem);
+  if (cart.length === 0) {
+    const cartBox = document.querySelector(".cart-box");
+    cartBox.style.opacity = "0";
+  }
+  cardItemButton.style.backgroundColor = "#6c9a36";
+  cardItemButton.innerHTML = "+";
 };
 
 const checkIfAlreadyAdded = itemId => {
@@ -171,7 +186,8 @@ async function renderBooks(bookName) {
         const card = createElement("div", { class: "card" }, [Image, bookInfo]);
 
         const addOrRemoveButton = createElement("span", {
-          class: "add-remove-button"
+          class: "add-remove-button",
+          "data-card-item-id": item.id
         });
 
         if (checkIfAlreadyAdded(item.id)) {
@@ -185,7 +201,7 @@ async function renderBooks(bookName) {
           const cartBox = document.querySelector(".cart-box");
           if (isAdded) {
             addOrRemoveButton.style.backgroundColor = "#6c9a36";
-            removeFromCart(item.id);
+            removeFromCart(item);
             addOrRemoveButton.innerHTML = "+";
           } else {
             cartBox.style.opacity = "1";
