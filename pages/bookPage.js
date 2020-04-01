@@ -117,6 +117,7 @@ const renderBook = async bookId => {
     window.history.pushState({}, null, `/`);
     renderHome();
     renderBooks(searchWord);
+    console.log(cart);
     const searchBar = document.querySelector(".search-bar");
     searchBar.value = searchWord;
   });
