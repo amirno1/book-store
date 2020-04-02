@@ -1,23 +1,36 @@
 * {
   padding: 0;
   margin: 0;
+}
+nav {
   font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background-color: #1a1a1dc4;
+  padding: 10px;
+}
+nav h1 {
+  font-family: "Dancing Script", cursive;
+  color: #c3073f;
+  font-size: 45px;
+  padding-left: 10px;
 }
 
 body {
+  font-family: Arial, Helvetica, sans-serif;
   background: url("book3.jpeg") no-repeat center fixed;
   background-size: cover;
 }
 .main-wrapper {
   width: 960px;
-  margin: 50px auto;
+  margin: 150px auto;
   text-align: center;
 }
-.search-header {
-  color: #034a5e;
-  background-color: #ffffff60;
-  margin-bottom: 50px;
-}
+
 .search-bar {
   width: 500px;
   height: 40px;
@@ -43,16 +56,15 @@ body {
   display: block;
   margin: 0 auto;
   border-radius: 5px;
-  background-color: #034a5e90;
+  background-color: #950642d2;
   color: #fff;
   cursor: pointer;
   transition: all 0.3s;
 }
 .search-button:hover {
-  background-color: #034a5e;
+  background-color: #950641;
 }
 .search-button:active {
-  background-color: #034a5e70;
   transform: translateY(4px);
 }
 .result {
@@ -142,7 +154,7 @@ body {
 .add-remove-button {
   position: absolute;
   background-color: #6c9a36;
-  color: #42493a;
+  color: #fff;
   font-weight: bold;
   font-size: 20px;
   top: 5%;
@@ -153,28 +165,28 @@ body {
 }
 
 .add-remove-button:hover {
-  padding: 5px 30px;
+  padding: 5px 20px;
 }
 .fa-cart-arrow-down {
   position: fixed;
   right: 5%;
   font-size: 25px;
-  background-color: #0b57a0;
-  color: #fffd14;
+  background-color: #6f2132;
+  color: #fff;
   padding: 5px 20px;
   border-radius: 5px;
   cursor: pointer;
   transition: all 0.3s;
 }
 .fa-cart-arrow-down:hover {
-  background-color: #063969;
+  background-color: #950641;
 }
 .fa-cart-arrow-down:active {
   transform: translateY(4px);
 }
 .cart-amount {
   font-size: 15px;
-  padding-left: 5px;
+  font-family: Arial, Helvetica, sans-serif;
 }
 .cart-box {
   opacity: 0;
@@ -182,7 +194,8 @@ body {
   text-align: left;
   font-size: 12px;
   position: fixed;
-  background-color: #d9d9d9;
+  background-color: #4e4e50;
+  color: #fff;
   width: 300px;
   right: 4%;
   top: 20%;
@@ -207,14 +220,13 @@ body {
   margin-right: 10px;
 }
 .cart-item-amount-wrapper {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: bold;
+  display: flex;
+  align-items: center;
 }
 .cart-item-amount-minus,
 .cart-item-amount-plus {
-  border: 1px solid #3d749e;
-  border-radius: 100%;
-  background-color: #fff;
   padding: 5px;
   cursor: pointer;
 }

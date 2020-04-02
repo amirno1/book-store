@@ -3,13 +3,12 @@ let cart = [];
 let cartShown;
 let cachedBooks;
 
+const cartAmount = (document.querySelector(".cart-amount").innerHTML =
+  cart.length);
 // creating home page template
 const homePageTemplate = () => `
     <div class="search-wrapper">
-      <div class="fas fa-cart-arrow-down"><span class="cart-amount">${cart.length}</span></div>
       <div class="cart-box"></div>
-      </div>
-      <h1 class="search-header">Enter a book name to search</h1>
       <input
         class="search-bar"
         type="text"
@@ -33,7 +32,7 @@ const addToCartBox = item => {
   const cartItemAmountMinus = createElement("span", {
     class: "cart-item-amount-minus"
   });
-  cartItemAmountMinus.innerHTML = "-";
+  cartItemAmountMinus.innerHTML = `<ion-icon name="arrow-back-outline"></ion-icon>`;
   const cartItemAmount = createElement("span", {
     class: "cart-item-amount"
   });
@@ -51,7 +50,7 @@ const addToCartBox = item => {
   const cartItemAmountPlus = createElement("span", {
     class: "cart-item-amount-plus"
   });
-  cartItemAmountPlus.innerHTML = "+";
+  cartItemAmountPlus.innerHTML = `<ion-icon name="arrow-forward-outline"></ion-icon>`;
 
   appendChilderen(cartItemAmountWrapper, [
     cartItemAmountMinus,
@@ -104,7 +103,7 @@ const removeFromCart = item => {
     cartBox.style.opacity = "0";
   }
   cardItemButton.style.backgroundColor = "#6c9a36";
-  cardItemButton.innerHTML = "+";
+  cardItemButton.innerHTML = `<ion-icon name="add-outline"></ion-icon>`;
 };
 
 const createElement = (elementType, attributes) => {
@@ -124,7 +123,7 @@ function renderHome() {
   const searchBar = document.querySelector(".search-bar");
   const searchButton = document.querySelector(".search-button");
   const result = document.querySelector(".result");
-
+  searchBar.placeholder = "Enter a book name to search";
   if (cart.length !== 0) {
     cart.forEach(item => addToCartBox(item));
     cartBox.style.opacity = "1";
@@ -137,12 +136,18 @@ function renderHome() {
     searchWord = searchBar.value;
     checkForWarning();
   });
+  searchBar.addEventListener("click", () => {
+    searchBar.placeholder = "";
+  });
 
   searchBar.addEventListener("keypress", e => {
     if (e.key === "Enter") {
       result.innerHTML = "";
       cachedBooks = null;
       renderBooks(searchWord);
+    }
+    if (searchWord.length === 0) {
+      searchBar.placeholder = "Enter a book name to search";
     }
   });
 
@@ -190,9 +195,12 @@ async function renderBooks(bookName) {
         });
 
         if (isAdded) {
-          addOrRemoveButton.style.backgroundColor = "#F43E00";
+          addOrRemoveButton.style.backgroundColor = "#c3063f";
         }
-        addOrRemoveButton.innerHTML = isAdded ? "x" : "+";
+        addOrRemoveButton.innerHTML = isAdded
+          ? `<ion-icon name="close-outline"></ion-icon>
+`
+          : `<ion-icon name="add-outline"></ion-icon>`;
         addOrRemoveButton.addEventListener("click", e => {
           e.stopPropagation();
           const cartAmount = document.querySelector(".cart-amount");
@@ -201,14 +209,15 @@ async function renderBooks(bookName) {
           if (isAdded) {
             addOrRemoveButton.style.backgroundColor = "#6c9a36";
             removeFromCart(item);
-            addOrRemoveButton.innerHTML = "+";
+            addOrRemoveButton.innerHTML = `<ion-icon name="add-outline"></ion-icon>`;
           } else {
             cartBox.style.opacity = "1";
             addOrRemoveButton.style.backgroundColor = !isAdded
-              ? "#F43E00"
+              ? "#c3063f"
               : "#6c9a36";
             addToCart(item);
-            addOrRemoveButton.innerHTML = "x";
+            addOrRemoveButton.innerHTML = `<ion-icon name="close-outline"></ion-icon>
+`;
           }
           cartAmount.innerHTML = cart.length;
           if (cart.length === 0) {
