@@ -7,11 +7,12 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: sticky;
+  position: fixed;
+  width: 100%;
   top: 0;
   z-index: 5;
-  background-color: #1a1a1dc4;
   padding: 10px;
+  transition: 0.4s;
 }
 nav h1 {
   font-family: "Dancing Script", cursive;
@@ -19,15 +20,20 @@ nav h1 {
   font-size: 45px;
   padding-left: 10px;
 }
+.amir-books-logo {
+  width: 300px;
+  border-radius: 10px;
+  transition: 0.4s;
+}
 
 body {
   font-family: Arial, Helvetica, sans-serif;
-  background: url("book3.jpeg") no-repeat center fixed;
+  background: url("./images/book3.jpeg") no-repeat center fixed;
   background-size: cover;
 }
 .main-wrapper {
   width: 960px;
-  margin: 150px auto;
+  margin: 250px auto;
   text-align: center;
 }
 
@@ -56,7 +62,7 @@ body {
   display: block;
   margin: 0 auto;
   border-radius: 5px;
-  background-color: #950642d2;
+  background-color: #950642a3;
   color: #fff;
   cursor: pointer;
   transition: all 0.3s;
@@ -74,10 +80,7 @@ body {
 }
 .card {
   position: relative;
-  display: flex;
   cursor: pointer;
-  flex-direction: column;
-  flex-wrap: wrap;
   margin: 0 20px 20px 0;
   width: calc(100% / 4 - 15px);
   height: 200px;
@@ -87,31 +90,32 @@ body {
 .card:nth-child(4n + 0) {
   margin: 0 0 20px 0;
 }
-.book-info {
-  color: #fff;
-  background-color: rgba(60, 74, 93, 0.9);
-  border-radius: 0 0 5px 5px;
-  font-size: 14px;
-  height: 30%;
-  transition: all 0.04s;
-}
-.card:hover .book-info {
-  background-color: #034a5e;
-}
+
 .card:hover {
   transform: scale(1.05);
 }
 .card:hover .add-remove-button {
   opacity: 1;
 }
-.book-image {
+.card:hover .card-book-title {
+  opacity: 1;
+}
+.card-book-image {
   border-radius: 5px 5px 0 0;
-  height: 70%;
+  height: 100%;
+  width: 160px;
 }
-.book-info p {
-  padding: 10px 5px;
+.card-book-title {
+  position: absolute;
+  opacity: 0;
+  background-color: #6f2132;
+  color: #fff;
+  transition: 0.5s;
+  bottom: 0;
+  width: 160px;
+  font-size: 9px;
+  padding: 10px 0;
 }
-
 .book-wrapper {
   display: flex;
   justify-content: space-between;
@@ -140,16 +144,16 @@ body {
 .book-info-items-wrapper {
   margin-right: 20px;
 }
-.back-home-button {
+.back-to-last-search-button {
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
   font-size: 18px;
   color: #fff;
-  background-color: #034a5e90;
+  background-color: #950642a3;
 }
-.back-home-button:hover {
-  background-color: #034a5e;
+.back-to-last-search-button:hover {
+  background-color: #950641;
 }
 .add-remove-button {
   position: absolute;

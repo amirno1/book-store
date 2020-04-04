@@ -105,21 +105,20 @@ const renderBook = async bookId => {
     }
   } catch (error) {
     console.log(error);
-    mainWrapper.innerHTML = "<div>Something went wrong</div>";
+    mainWrapper.innerHTML = "<h1>Something went wrong</h1>";
   }
 
-  const backToHome = createElement("button", {
-    class: "back-home-button"
+  const backToLastSearchButton = createElement("button", {
+    class: "back-to-last-search-button"
   });
-  backToHome.innerHTML = "Home";
+  backToLastSearchButton.innerHTML = "Back";
 
-  backToHome.addEventListener("click", () => {
+  backToLastSearchButton.addEventListener("click", () => {
     window.history.pushState({}, null, `/`);
     renderHome();
     renderBooks(searchWord);
-    console.log(cart);
     const searchBar = document.querySelector(".search-bar");
     searchBar.value = searchWord;
   });
-  mainWrapper.appendChild(backToHome);
+  mainWrapper.appendChild(backToLastSearchButton);
 };

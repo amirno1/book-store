@@ -103,7 +103,7 @@ const removeFromCart = item => {
     cartBox.style.opacity = "0";
   }
   cardItemButton.style.backgroundColor = "#6c9a36";
-  cardItemButton.innerHTML = `<ion-icon name="add-outline"></ion-icon>`;
+  cardItemButton.innerHTML = `<ion-icon name="cart-outline"></ion-icon>`;
 };
 
 const createElement = (elementType, attributes) => {
@@ -187,7 +187,7 @@ async function renderBooks(bookName) {
     data.items.forEach(item => {
       if (item) {
         let isAdded = cart.find(book => book.id === item.id);
-        const card = createElement("div", { class: "card" }, [Image, bookInfo]);
+        const card = createElement("div", { class: "card" });
 
         const addOrRemoveButton = createElement("span", {
           class: "add-remove-button",
@@ -198,9 +198,8 @@ async function renderBooks(bookName) {
           addOrRemoveButton.style.backgroundColor = "#c3063f";
         }
         addOrRemoveButton.innerHTML = isAdded
-          ? `<ion-icon name="close-outline"></ion-icon>
-`
-          : `<ion-icon name="add-outline"></ion-icon>`;
+          ? `<ion-icon name="trash-outline"></ion-icon>`
+          : `<ion-icon name="cart-outline"></ion-icon>`;
         addOrRemoveButton.addEventListener("click", e => {
           e.stopPropagation();
           const cartAmount = document.querySelector(".cart-amount");
@@ -209,15 +208,14 @@ async function renderBooks(bookName) {
           if (isAdded) {
             addOrRemoveButton.style.backgroundColor = "#6c9a36";
             removeFromCart(item);
-            addOrRemoveButton.innerHTML = `<ion-icon name="add-outline"></ion-icon>`;
+            addOrRemoveButton.innerHTML = `<ion-icon name="cart-outline"></ion-icon>`;
           } else {
             cartBox.style.opacity = "1";
             addOrRemoveButton.style.backgroundColor = !isAdded
               ? "#c3063f"
               : "#6c9a36";
             addToCart(item);
-            addOrRemoveButton.innerHTML = `<ion-icon name="close-outline"></ion-icon>
-`;
+            addOrRemoveButton.innerHTML = `<ion-icon name="trash-outline"></ion-icon>`;
           }
           cartAmount.innerHTML = cart.length;
           if (cart.length === 0) {
@@ -227,22 +225,23 @@ async function renderBooks(bookName) {
 
         card.appendChild(addOrRemoveButton);
 
-        const image = createElement("img", { class: "book-image" });
+        const cardBookImage = createElement("img", {
+          class: "card-book-image"
+        });
 
-        var bookInfo = createElement("div", { class: "book-info" });
-
-        const title = createElement("p");
+        const cardBookTitle = createElement("span", {
+          class: "card-book-title"
+        });
 
         let bookTitle = item.volumeInfo.title;
 
-        title.innerHTML =
-          bookTitle.length >= 25 ? bookTitle.slice(0, 25) + "..." : bookTitle;
+        cardBookTitle.innerHTML =
+          bookTitle.length <= 25 ? bookTitle : bookTitle.slice(0, 25) + "...";
         item.volumeInfo.imageLinks
-          ? (image.src = `${item.volumeInfo.imageLinks.thumbnail}`)
-          : (image.src = `https://www.ottofrei.com/sc-app/extensions/VintenCloud/OttoFreiSuiteCommerceTheme/18.2.0/img/no_image_available.jpeg`);
+          ? (cardBookImage.src = `${item.volumeInfo.imageLinks.thumbnail}`)
+          : (cardBookImage.src = `https://www.ottofrei.com/sc-app/extensions/VintenCloud/OttoFreiSuiteCommerceTheme/18.2.0/img/no_image_available.jpeg`);
 
-        bookInfo.appendChild(title);
-        appendChilderen(card, [image, bookInfo]);
+        appendChilderen(card, [cardBookTitle, cardBookImage]);
 
         card.addEventListener("click", () => {
           window.history.pushState({}, null, `/book?id=${item.id}`);
@@ -278,3 +277,22 @@ const checkForWarning = () => {
 };
 
 renderHome();
+window.onscroll = () => {
+  console.log(document.documentElement.scrollTop);
+  scrollHandler();
+};
+
+const scrollHandler = () => {
+  const logo = document.querySelector(".amir-books-logo");
+  const nav = document.querySelector("nav");
+  if (
+    document.body.scrollTop > 100 ||
+    document.documentElement.scrollTop > 100
+  ) {
+    logo.style.width = "200px";
+    nav.style.backgroundColor = "#18181d";
+  } else {
+    logo.style.width = "300px";
+    nav.style.backgroundColor = "";
+  }
+};
