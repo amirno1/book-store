@@ -101,7 +101,7 @@ body {
   opacity: 1;
 }
 .card-book-image {
-  border-radius: 5px 5px 0 0;
+  border-radius: 5px;
   height: 100%;
   width: 160px;
 }
@@ -113,7 +113,8 @@ body {
   transition: 0.5s;
   bottom: 0;
   width: 160px;
-  font-size: 9px;
+  font-size: 10px;
+  border-radius: 0 0 5px 5px;
   padding: 10px 0;
 }
 .book-wrapper {
