@@ -30,7 +30,9 @@ const bookPageTemplate = book => {
   });
 
   const bookImage = createElement("img", {
-    src: book.volumeInfo.imageLinks.thumbnail
+    src: book.volumeInfo.imageLinks
+      ? book.volumeInfo.imageLinks.thumbnail
+      : "https://www.ottofrei.com/sc-app/extensions/VintenCloud/OttoFreiSuiteCommerceTheme/18.2.0/img/no_image_available.jpeg"
   });
   bookImageWrapper.appendChild(bookImage);
 

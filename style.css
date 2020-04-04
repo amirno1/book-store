@@ -12,7 +12,7 @@ nav {
   top: 0;
   z-index: 5;
   padding: 10px;
-  transition: 0.4s;
+  transition: 0.5s;
 }
 nav h1 {
   font-family: "Dancing Script", cursive;
@@ -23,7 +23,7 @@ nav h1 {
 .amir-books-logo {
   width: 300px;
   border-radius: 10px;
-  transition: 0.4s;
+  transition: 0.5s;
 }
 
 body {
@@ -121,7 +121,7 @@ body {
   justify-content: space-between;
   text-align: left;
   border-radius: 10px;
-  background: #161313;
+  background: #4e4e50;
   color: #fff;
   padding: 40px;
   margin-bottom: 20px;
@@ -205,6 +205,8 @@ body {
   top: 20%;
   padding: 10px;
   border-radius: 3px;
+  max-height: 150px;
+  overflow: scroll;
   transition: all 0.3s;
 }
 

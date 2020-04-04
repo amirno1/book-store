@@ -5,6 +5,10 @@ let cachedBooks;
 
 const cartAmount = (document.querySelector(".cart-amount").innerHTML =
   cart.length);
+const navLogo = document.querySelector(".amir-books-logo");
+navLogo.addEventListener("click", () => {
+  window.history.pushState({}, null, `/`);
+});
 // creating home page template
 const homePageTemplate = () => `
     <div class="search-wrapper">
@@ -285,11 +289,8 @@ window.onscroll = () => {
 const scrollHandler = () => {
   const logo = document.querySelector(".amir-books-logo");
   const nav = document.querySelector("nav");
-  if (
-    document.body.scrollTop > 100 ||
-    document.documentElement.scrollTop > 100
-  ) {
-    logo.style.width = "200px";
+  if (document.body.scrollTop > 70 || document.documentElement.scrollTop > 70) {
+    logo.style.width = "150px";
     nav.style.backgroundColor = "#18181d";
   } else {
     logo.style.width = "300px";
