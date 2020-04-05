@@ -8,6 +8,10 @@ const cartAmount = (document.querySelector(".cart-amount").innerHTML =
 const navLogo = document.querySelector(".amir-books-logo");
 navLogo.addEventListener("click", () => {
   window.history.pushState({}, null, `/`);
+  renderHome();
+  const searchBar = document.querySelector(".search-bar");
+  searchWord = "";
+  searchBar.value = "";
 });
 // creating home page template
 const homePageTemplate = () => `
@@ -36,7 +40,7 @@ const addToCartBox = item => {
   const cartItemAmountMinus = createElement("span", {
     class: "cart-item-amount-minus"
   });
-  cartItemAmountMinus.innerHTML = `<ion-icon name="arrow-back-outline"></ion-icon>`;
+  cartItemAmountMinus.innerHTML = `<ion-icon name="remove-circle-outline"></ion-icon>`;
   const cartItemAmount = createElement("span", {
     class: "cart-item-amount"
   });
@@ -44,6 +48,10 @@ const addToCartBox = item => {
     class: "cart-item-title"
   });
   cartItemTitle.innerHTML = item.title;
+
+  cartItemTitle.addEventListener("click", () => {
+    navigateToBookPage(item.id);
+  });
 
   const cartItemImage = createElement("img", {
     class: "cart-item-amount"
@@ -54,7 +62,7 @@ const addToCartBox = item => {
   const cartItemAmountPlus = createElement("span", {
     class: "cart-item-amount-plus"
   });
-  cartItemAmountPlus.innerHTML = `<ion-icon name="arrow-forward-outline"></ion-icon>`;
+  cartItemAmountPlus.innerHTML = `<ion-icon name="add-circle-outline"></ion-icon>`;
 
   appendChilderen(cartItemAmountWrapper, [
     cartItemAmountMinus,
@@ -161,7 +169,10 @@ function renderHome() {
     renderBooks(searchWord);
   });
 }
-
+const navigateToBookPage = bookId => {
+  window.history.pushState({}, null, `/book?id=${bookId}`);
+  renderBook(bookId);
+};
 const fetchBooks = async bookName => {
   if (!cachedBooks) {
     const res = await fetch(
@@ -248,8 +259,7 @@ async function renderBooks(bookName) {
         appendChilderen(card, [cardBookTitle, cardBookImage]);
 
         card.addEventListener("click", () => {
-          window.history.pushState({}, null, `/book?id=${item.id}`);
-          renderBook(item.id);
+          navigateToBookPage(item.id);
         });
 
         const result = document.querySelector(".result");
@@ -282,7 +292,6 @@ const checkForWarning = () => {
 
 renderHome();
 window.onscroll = () => {
-  console.log(document.documentElement.scrollTop);
   scrollHandler();
 };
 

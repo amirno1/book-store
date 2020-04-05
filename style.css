@@ -21,6 +21,7 @@ nav h1 {
   padding-left: 10px;
 }
 .amir-books-logo {
+  cursor: pointer;
   width: 300px;
   border-radius: 10px;
   transition: 0.5s;
@@ -28,7 +29,7 @@ nav h1 {
 
 body {
   font-family: Arial, Helvetica, sans-serif;
-  background: url("./images/book3.jpeg") no-repeat center fixed;
+  background: url("./images/3.jpeg") no-repeat center fixed;
   background-size: cover;
 }
 .main-wrapper {
@@ -176,7 +177,7 @@ body {
   position: fixed;
   right: 5%;
   font-size: 25px;
-  background-color: #6f2132;
+  background-color: #c3063f;
   color: #fff;
   padding: 5px 20px;
   border-radius: 5px;
@@ -219,6 +220,9 @@ body {
   align-items: center;
   justify-content: space-between;
 }
+.cart-item-title {
+  cursor: pointer;
+}
 .cart-item img {
   width: 30px;
   height: 30px;
@@ -228,9 +232,6 @@ body {
 }
 .cart-item-amount-wrapper {
   font-size: 14px;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
 }
 .cart-item-amount-minus,
 .cart-item-amount-plus {
