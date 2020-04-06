@@ -3,8 +3,18 @@ let cart = [];
 let cartShown;
 let cachedBooks;
 
+const mainWrapper = document.querySelector(".main-wrapper");
+
 const cartAmount = (document.querySelector(".cart-amount").innerHTML =
   cart.length);
+const cartButtonHomePage = document.querySelector(".fa-cart-arrow-down");
+cartButtonHomePage.addEventListener("click", () => {
+  navigateToCartPage();
+});
+const navigateToCartPage = () => {
+  window.history.pushState({}, null, "/cart");
+  renderCart();
+};
 const navLogo = document.querySelector(".amir-books-logo");
 navLogo.addEventListener("click", () => {
   window.history.pushState({}, null, `/`);
@@ -128,7 +138,6 @@ const createElement = (elementType, attributes) => {
 };
 // render home page template
 function renderHome() {
-  const mainWrapper = document.querySelector(".main-wrapper");
   mainWrapper.innerHTML = homePageTemplate();
   const cartBox = document.querySelector(".cart-box");
 

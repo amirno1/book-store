@@ -96,7 +96,6 @@ const fetchBook = async bookId => {
 };
 // Fetching the chosen book information
 const renderBook = async bookId => {
-  const mainWrapper = document.querySelector(".main-wrapper");
   try {
     const res = await fetchBook(bookId);
     if (res) {
