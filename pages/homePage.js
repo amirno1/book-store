@@ -74,13 +74,13 @@ const addToCartBox = item => {
   });
   cartItemAmountPlus.innerHTML = `<ion-icon name="add-circle-outline"></ion-icon>`;
 
-  appendChilderen(cartItemAmountWrapper, [
+  appendChildren(cartItemAmountWrapper, [
     cartItemAmountMinus,
     cartItemAmount,
     cartItemAmountPlus
   ]);
   cartItem.appendChild(cartItemAmountWrapper);
-  appendChilderen(cartItem, [cartItemTitle, cartItemImage]);
+  appendChildren(cartItem, [cartItemTitle, cartItemImage]);
   cartBox.appendChild(cartItem);
 
   cartItemAmountMinus.addEventListener("click", () => {
@@ -100,6 +100,9 @@ const addToCart = item => {
   let currentBook = {
     id: item.id,
     amount: 1,
+    price: item.saleInfo.listPrice
+      ? item.saleInfo.listPrice.amount
+      : Math.round(Math.random() * 20) + 5,
     title:
       item.volumeInfo.title.length < 25
         ? item.volumeInfo.title
@@ -193,7 +196,7 @@ const fetchBooks = async bookName => {
   return cachedBooks;
 };
 
-const appendChilderen = (element, children) => {
+const appendChildren = (element, children) => {
   children.forEach(child => {
     if (typeof child === "string") {
       element.appendChild(document.createTextNode(child));
@@ -212,7 +215,6 @@ async function renderBooks(bookName) {
       if (item) {
         let isAdded = cart.find(book => book.id === item.id);
         const card = createElement("div", { class: "card" });
-
         const addOrRemoveButton = createElement("span", {
           class: "add-remove-button",
           "data-card-item-id": item.id
@@ -265,7 +267,7 @@ async function renderBooks(bookName) {
           ? (cardBookImage.src = `${item.volumeInfo.imageLinks.thumbnail}`)
           : (cardBookImage.src = `https://www.ottofrei.com/sc-app/extensions/VintenCloud/OttoFreiSuiteCommerceTheme/18.2.0/img/no_image_available.jpeg`);
 
-        appendChilderen(card, [cardBookTitle, cardBookImage]);
+        appendChildren(card, [cardBookTitle, cardBookImage]);
 
         card.addEventListener("click", () => {
           navigateToBookPage(item.id);

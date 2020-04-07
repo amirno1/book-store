@@ -12,16 +12,20 @@ const cartTemplate = `
 </div>`;
 
 const renderCart = () => {
-  const cartItems = cart.map(item => {
-    return `
-    <tr>
-      <td>${item.title}</td>
-      <td>€25</td>
-      <td>${item.amount}</td>
-      <td>$€25</td>
-    </tr>`;
-  });
   mainWrapper.innerHTML = cartTemplate;
   const cartTable = document.querySelector(".cart-page-table");
-  cartTable.innerHTML += cartItems;
+  cart.map(item => {
+    const itemRow = createElement("tr");
+    const itemTitle = createElement("td");
+    const itemPrice = createElement("td");
+    const itemAmount = createElement("td");
+    const itemTotal = createElement("td");
+
+    itemTitle.innerHTML = item.title;
+    itemPrice.innerHTML = `€${item.price}`;
+    itemAmount.innerHTML = item.amount;
+    itemTotal.innerHTML = `€${item.price * item.amount}`;
+    appendChildren(itemRow, [itemTitle, itemPrice, itemAmount, itemTotal]);
+    cartTable.appendChild(itemRow);
+  });
 };
