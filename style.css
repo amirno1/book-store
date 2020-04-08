@@ -261,3 +261,13 @@ body {
   background-color: #fff;
   border-radius: 3px;
 }
+.cart-page-item-image {
+  width: 50px;
+  height: 80px;
+}
+.cart-page-item-title {
+  margin: auto auto;
+}
+.cart-page-item-title-wrapper {
+  display: flex;
+}

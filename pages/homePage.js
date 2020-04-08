@@ -38,6 +38,26 @@ const homePageTemplate = () => `
     </div>
     <div class="result"></div>`;
 
+const handleItemAmount = (
+  item,
+  minusElement,
+  plusElement,
+  itemAmountElement
+) => {
+  minusElement.addEventListener("click", () => {
+    if (item.amount > 1) {
+      itemAmountElement.innerHTML = item.amount -= 1;
+    } else {
+      const cartAmount = document.querySelector(".cart-amount");
+      removeFromCart(item);
+      cartAmount.innerHTML = cart.length;
+    }
+  });
+  plusElement.addEventListener("click", () => {
+    itemAmountElement.innerHTML = item.amount += 1;
+  });
+};
+
 const addToCartBox = item => {
   const cartBox = document.querySelector(".cart-box");
   const cartItem = createElement("div", {
@@ -47,17 +67,16 @@ const addToCartBox = item => {
   const cartItemAmountWrapper = createElement("div", {
     class: "cart-item-amount-wrapper"
   });
-  const cartItemAmountMinus = createElement("span", {
-    class: "cart-item-amount-minus"
-  });
-  cartItemAmountMinus.innerHTML = `<ion-icon name="remove-circle-outline"></ion-icon>`;
+
   const cartItemAmount = createElement("span", {
     class: "cart-item-amount"
   });
   const cartItemTitle = createElement("p", {
     class: "cart-item-title"
   });
-  cartItemTitle.innerHTML = item.title;
+
+  cartItemTitle.innerHTML =
+    item.title.length < 25 ? item.title : item.title.slice(0, 25) + "...";
 
   cartItemTitle.addEventListener("click", () => {
     navigateToBookPage(item.id);
@@ -69,6 +88,11 @@ const addToCartBox = item => {
   cartItemImage.src = item.image;
 
   cartItemAmount.innerHTML = item.amount;
+
+  const cartItemAmountMinus = createElement("span", {
+    class: "cart-item-amount-minus"
+  });
+  cartItemAmountMinus.innerHTML = `<ion-icon name="remove-circle-outline"></ion-icon>`;
   const cartItemAmountPlus = createElement("span", {
     class: "cart-item-amount-plus"
   });
@@ -83,18 +107,12 @@ const addToCartBox = item => {
   appendChildren(cartItem, [cartItemTitle, cartItemImage]);
   cartBox.appendChild(cartItem);
 
-  cartItemAmountMinus.addEventListener("click", () => {
-    if (item.amount > 1) {
-      cartItemAmount.innerHTML = item.amount -= 1;
-    } else {
-      const cartAmount = document.querySelector(".cart-amount");
-      removeFromCart(item);
-      cartAmount.innerHTML = cart.length;
-    }
-  });
-  cartItemAmountPlus.addEventListener("click", () => {
-    cartItemAmount.innerHTML = item.amount += 1;
-  });
+  handleItemAmount(
+    item,
+    cartItemAmountMinus,
+    cartItemAmountPlus,
+    cartItemAmount
+  );
 };
 const addToCart = item => {
   let currentBook = {
@@ -103,10 +121,7 @@ const addToCart = item => {
     price: item.saleInfo.listPrice
       ? item.saleInfo.listPrice.amount
       : Math.round(Math.random() * 20) + 5,
-    title:
-      item.volumeInfo.title.length < 25
-        ? item.volumeInfo.title
-        : item.volumeInfo.title.slice(0, 25) + "...",
+    title: item.volumeInfo.title,
     authors: item.volumeInfo.authors ? item.volumeInfo.authors[0] : "Unknown",
     image: item.volumeInfo.imageLinks
       ? item.volumeInfo.imageLinks.thumbnail
