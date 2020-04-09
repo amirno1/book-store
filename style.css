@@ -248,6 +248,7 @@ body {
 .cart-page-table tr td {
   padding: 10px;
   border-bottom: solid 1px #c3063f;
+  min-width: 100px;
 }
 .cart-page-table tr td:nth-child(1) {
   text-align: left;

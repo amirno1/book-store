@@ -36,7 +36,7 @@ const renderCart = () => {
     const itemAmount = createElement("span");
     const itemAmountwrapper = createElement("td");
     appendChildren(itemAmountwrapper, [itemMinus, itemAmount, itemPlus]);
-    const itemTotal = createElement("td");
+    const itemTotal = createElement("td", { class: "cart-page-item-total" });
     itemTitle.innerHTML = item.title;
     itemImage.src = item.image;
     itemPrice.innerHTML = `€${item.price}`;
@@ -50,6 +50,14 @@ const renderCart = () => {
       itemTotal
     ]);
     handleItemAmount(item, itemMinus, itemPlus, itemAmount);
+    cartPageUpdateItemTotal(item, itemMinus, itemTotal);
+    cartPageUpdateItemTotal(item, itemPlus, itemTotal);
     cartTable.appendChild(itemRow);
+  });
+};
+
+const cartPageUpdateItemTotal = (item, itemAmountElement, itemTotal) => {
+  itemAmountElement.addEventListener("click", () => {
+    itemTotal.innerHTML = item.price * item.amount;
   });
 };
