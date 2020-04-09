@@ -13,9 +13,14 @@ const cartTemplate = `
 
 const renderCart = () => {
   mainWrapper.innerHTML = cartTemplate;
+  if (!cart.length) {
+    const cartPageTableWrapper = document.querySelector(".cart-table-wrapper");
+    cartPageTableWrapper.innerHTML += `<h1>There is no item in your cart</h1>`;
+  } else {
+  }
   const cartTable = document.querySelector(".cart-page-table");
   cart.map(item => {
-    const itemRow = createElement("tr");
+    const itemRow = createElement("tr", { "data-cart-page-item-id": item.id });
     const itemImage = createElement("img", { class: "cart-page-item-image" });
     const itemMinus = createElement("span", {
       class: "cart-item-amount-minus"

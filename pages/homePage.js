@@ -48,10 +48,10 @@ const handleItemAmount = (
     if (item.amount > 1) {
       itemAmountElement.innerHTML = item.amount -= 1;
     } else {
-      const cartAmount = document.querySelector(".cart-amount");
       removeFromCart(item);
-      cartAmount.innerHTML = cart.length;
     }
+    const cartAmount = document.querySelector(".cart-amount");
+    cartAmount.innerHTML = cart.length;
   });
   plusElement.addEventListener("click", () => {
     itemAmountElement.innerHTML = item.amount += 1;
@@ -134,16 +134,32 @@ const addToCart = item => {
 const removeFromCart = item => {
   cart = cart.filter(cartItem => cartItem.id !== item.id);
   const cartBoxItem = document.querySelector(`[data-cart-item-id=${item.id}]`);
+  const cartPageItem = document.querySelector(
+    `[data-cart-page-item-id=${item.id}]`
+  );
   const cardItemButton = document.querySelector(
     `[data-card-item-id=${item.id}]`
   );
-  cartBoxItem.parentElement.removeChild(cartBoxItem);
+  if (cartBoxItem) {
+    cartBoxItem.parentElement.removeChild(cartBoxItem);
+  } else {
+    cartPageItem.parentElement.removeChild(cartPageItem);
+  }
   if (cart.length === 0) {
     const cartBox = document.querySelector(".cart-box");
-    cartBox.style.opacity = "0";
+    if (cartBox) {
+      cartBox.style.opacity = "0";
+    } else {
+      const cartPageTableWrapper = document.querySelector(
+        ".cart-table-wrapper"
+      );
+      cartPageTableWrapper.innerHTML += `<h1>There is no item in your cart</h1>`;
+    }
   }
-  cardItemButton.style.backgroundColor = "#6c9a36";
-  cardItemButton.innerHTML = `<ion-icon name="cart-outline"></ion-icon>`;
+  if (cardItemButton) {
+    cardItemButton.style.backgroundColor = "#6c9a36";
+    cardItemButton.innerHTML = `<ion-icon name="cart-outline"></ion-icon>`;
+  }
 };
 
 const createElement = (elementType, attributes) => {
