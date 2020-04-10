@@ -114,13 +114,11 @@ const addToCartBox = item => {
     cartItemAmount
   );
 };
-const addToCart = item => {
+const addToCart = (item, itemPrice) => {
   let currentBook = {
     id: item.id,
     amount: 1,
-    price: item.saleInfo.listPrice
-      ? item.saleInfo.listPrice.amount
-      : Math.round(Math.random() * 20) + 5,
+    price: itemPrice,
     title: item.volumeInfo.title,
     authors: item.volumeInfo.authors ? item.volumeInfo.authors[0] : "Unknown",
     image: item.volumeInfo.imageLinks
@@ -245,6 +243,9 @@ async function renderBooks(bookName) {
     data.items.forEach(item => {
       if (item) {
         let isAdded = cart.find(book => book.id === item.id);
+        const itemPrice = item.saleInfo.listPrice
+          ? item.saleInfo.listPrice.amount
+          : Math.round(Math.random() * 20) + 5;
         const card = createElement("div", { class: "card" });
         const addOrRemoveButton = createElement("span", {
           class: "add-remove-button",
@@ -271,7 +272,7 @@ async function renderBooks(bookName) {
             addOrRemoveButton.style.backgroundColor = !isAdded
               ? "#c3063f"
               : "#6c9a36";
-            addToCart(item);
+            addToCart(item, itemPrice);
             addOrRemoveButton.innerHTML = `<ion-icon name="trash-outline"></ion-icon>`;
           }
           cartAmount.innerHTML = cart.length;
@@ -280,7 +281,12 @@ async function renderBooks(bookName) {
           }
         });
 
-        card.appendChild(addOrRemoveButton);
+        const cardBookPrice = createElement("span", {
+          class: "card-book-price"
+        });
+        cardBookPrice.innerHTML = `€ ${itemPrice}`;
+
+        appendChildren(card, [addOrRemoveButton, cardBookPrice]);
 
         const cardBookImage = createElement("img", {
           class: "card-book-image"
@@ -297,7 +303,6 @@ async function renderBooks(bookName) {
         item.volumeInfo.imageLinks
           ? (cardBookImage.src = `${item.volumeInfo.imageLinks.thumbnail}`)
           : (cardBookImage.src = `https://www.ottofrei.com/sc-app/extensions/VintenCloud/OttoFreiSuiteCommerceTheme/18.2.0/img/no_image_available.jpeg`);
-
         appendChildren(card, [cardBookTitle, cardBookImage]);
 
         card.addEventListener("click", () => {

@@ -102,7 +102,16 @@ body {
 .card:hover .card-book-title {
   opacity: 1;
 }
+.card:hover .card-book-price {
+  opacity: 1;
+}
+.card:hover .card-book-image {
+  filter: blur(1px);
+  -webkit-filter: blur(1px);
+}
 .card-book-image {
+  filter: none;
+  transition: 0.5s;
   border-radius: 5px;
   height: 100%;
   width: 160px;
@@ -118,6 +127,19 @@ body {
   font-size: 10px;
   border-radius: 0 0 5px 5px;
   padding: 10px 0;
+  z-index: 3;
+}
+.card-book-price {
+  z-index: 3;
+  position: absolute;
+  opacity: 0;
+  color: #fff;
+  font-size: 12px;
+  top: 24%;
+  transition: 0.5s;
+  background-color: #6f2132;
+  padding: 5px;
+  border-radius: 0 5px 5px 0;
 }
 .book-wrapper {
   display: flex;
@@ -169,6 +191,7 @@ body {
   border-radius: 0 5px 5px 0;
   transition: all 0.5s;
   opacity: 0;
+  z-index: 3;
 }
 
 .add-remove-button:hover {
@@ -197,7 +220,7 @@ body {
 }
 .cart-box {
   opacity: 0;
-  z-index: 3;
+  z-index: 6;
   text-align: left;
   font-size: 12px;
   position: fixed;
