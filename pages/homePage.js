@@ -7,7 +7,7 @@ const mainWrapper = document.querySelector(".main-wrapper");
 
 const cartAmount = (document.querySelector(".cart-amount").innerHTML =
   cart.length);
-const cartButtonHomePage = document.querySelector(".fa-cart-arrow-down");
+const cartButtonHomePage = document.querySelector(".fa-shopping-cart");
 cartButtonHomePage.addEventListener("click", () => {
   navigateToCartPage();
 });
@@ -255,9 +255,22 @@ async function renderBooks(bookName) {
         if (isAdded) {
           addOrRemoveButton.style.backgroundColor = "#c3063f";
         }
+
         addOrRemoveButton.innerHTML = isAdded
-          ? `<ion-icon name="trash-outline"></ion-icon>`
-          : `<ion-icon name="cart-outline"></ion-icon>`;
+          ? `<ion-icon class="trash-icon"name="trash-outline"></ion-icon>`
+          : `€ ${itemPrice}`;
+        addOrRemoveButton.addEventListener("mouseenter", () => {
+          isAdded = cart.find(book => book.id === item.id);
+          if (!isAdded) {
+            addOrRemoveButton.innerHTML += `<span class="fa fa-cart-plus"></span>`;
+          }
+        });
+        addOrRemoveButton.addEventListener("mouseleave", () => {
+          isAdded = cart.find(book => book.id === item.id);
+          if (!isAdded) {
+            addOrRemoveButton.innerHTML = `€ ${itemPrice}`;
+          }
+        });
         addOrRemoveButton.addEventListener("click", e => {
           e.stopPropagation();
           const cartAmount = document.querySelector(".cart-amount");
@@ -266,14 +279,14 @@ async function renderBooks(bookName) {
           if (isAdded) {
             addOrRemoveButton.style.backgroundColor = "#6c9a36";
             removeFromCart(item);
-            addOrRemoveButton.innerHTML = `<ion-icon name="cart-outline"></ion-icon>`;
+            addOrRemoveButton.innerHTML = `€ ${itemPrice} <span class="fa fa-cart-plus"></span>`;
           } else {
             cartBox.style.opacity = "1";
             addOrRemoveButton.style.backgroundColor = !isAdded
               ? "#c3063f"
               : "#6c9a36";
             addToCart(item, itemPrice);
-            addOrRemoveButton.innerHTML = `<ion-icon name="trash-outline"></ion-icon>`;
+            addOrRemoveButton.innerHTML = `<ion-icon class= "trash-icon" name="trash-outline"></ion-icon>`;
           }
           cartAmount.innerHTML = cart.length;
           if (cart.length === 0) {
@@ -281,12 +294,7 @@ async function renderBooks(bookName) {
           }
         });
 
-        const cardBookPrice = createElement("span", {
-          class: "card-book-price"
-        });
-        cardBookPrice.innerHTML = `€ ${itemPrice}`;
-
-        appendChildren(card, [addOrRemoveButton, cardBookPrice]);
+        card.appendChild(addOrRemoveButton);
 
         const cardBookImage = createElement("img", {
           class: "card-book-image"

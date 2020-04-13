@@ -102,9 +102,6 @@ body {
 .card:hover .card-book-title {
   opacity: 1;
 }
-.card:hover .card-book-price {
-  opacity: 1;
-}
 .card:hover .card-book-image {
   filter: blur(1px);
   -webkit-filter: blur(1px);
@@ -129,18 +126,7 @@ body {
   padding: 10px 0;
   z-index: 3;
 }
-.card-book-price {
-  z-index: 3;
-  position: absolute;
-  opacity: 0;
-  color: #fff;
-  font-size: 12px;
-  top: 24%;
-  transition: 0.5s;
-  background-color: #6f2132;
-  padding: 5px;
-  border-radius: 0 5px 5px 0;
-}
+
 .book-wrapper {
   display: flex;
   justify-content: space-between;
@@ -185,7 +171,7 @@ body {
   background-color: #6c9a36;
   color: #fff;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 13px;
   top: 5%;
   padding: 5px;
   border-radius: 0 5px 5px 0;
@@ -195,9 +181,15 @@ body {
 }
 
 .add-remove-button:hover {
-  padding: 5px 20px;
+  padding: 5px 15px;
 }
-.fa-cart-arrow-down {
+.fa-cart-plus {
+  margin-left: 10px;
+}
+.trash-icon {
+  pointer-events: none;
+}
+.fa-shopping-cart {
   position: fixed;
   right: 5%;
   font-size: 25px;
@@ -208,10 +200,10 @@ body {
   cursor: pointer;
   transition: all 0.3s;
 }
-.fa-cart-arrow-down:hover {
+.fa-shopping-cart:hover {
   background-color: #950641;
 }
-.fa-cart-arrow-down:active {
+.fa-shopping-cart:active {
   transform: translateY(4px);
 }
 .cart-amount {
