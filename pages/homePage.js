@@ -62,7 +62,7 @@ const addToCartBox = item => {
   const cartBox = document.querySelector(".cart-box");
   const cartItem = createElement("div", {
     class: "cart-item",
-    "data-cart-item-id": item.id
+    "data-cart-item-id": `${item.id}`
   });
   const cartItemAmountWrapper = createElement("div", {
     class: "cart-item-amount-wrapper"
@@ -76,7 +76,7 @@ const addToCartBox = item => {
   });
 
   cartItemTitle.innerHTML =
-    item.title.length < 25 ? item.title : item.title.slice(0, 25) + "...";
+    item.title.length < 25 ? item.title : item.title.slice(0, 23) + "...";
 
   cartItemTitle.addEventListener("click", () => {
     navigateToBookPage(item.id);
@@ -131,18 +131,25 @@ const addToCart = (item, itemPrice) => {
 
 const removeFromCart = item => {
   cart = cart.filter(cartItem => cartItem.id !== item.id);
-  const cartBoxItem = document.querySelector(`[data-cart-item-id=${item.id}]`);
-  const cartPageItem = document.querySelector(
-    `[data-cart-page-item-id=${item.id}]`
-  );
-  const cardItemButton = document.querySelector(
-    `[data-card-item-id=${item.id}]`
-  );
-  if (cartBoxItem) {
-    cartBoxItem.parentElement.removeChild(cartBoxItem);
-  } else {
+
+  if (window.location.pathname === "/cart") {
+    const cartPageItem = document.querySelector(
+      `[data-cart-page-item-id="${item.id}"]`
+    );
     cartPageItem.parentElement.removeChild(cartPageItem);
+  } else {
+    const cartBoxItem = document.querySelector(
+      `[data-cart-item-id="${item.id}"]`
+    );
+    const cardItemButton = document.querySelector(
+      `[data-card-item-id="${item.id}"]`
+    );
+    cartBoxItem.parentElement.removeChild(cartBoxItem);
+
+    cardItemButton.style.backgroundColor = "#6c9a36";
+    cardItemButton.innerHTML = `€ ${item.price}`;
   }
+
   if (cart.length === 0) {
     const cartBox = document.querySelector(".cart-box");
     if (cartBox) {
@@ -151,12 +158,8 @@ const removeFromCart = item => {
       const cartPageTableWrapper = document.querySelector(
         ".cart-table-wrapper"
       );
-      cartPageTableWrapper.innerHTML += `<h1>There is no item in your cart</h1>`;
+      cartPageTableWrapper.innerHTML += `<h1 class="cart-page-no-item">There is no item in your cart</h1>`;
     }
-  }
-  if (cardItemButton) {
-    cardItemButton.style.backgroundColor = "#6c9a36";
-    cardItemButton.innerHTML = `<ion-icon name="cart-outline"></ion-icon>`;
   }
 };
 
@@ -249,7 +252,7 @@ async function renderBooks(bookName) {
         const card = createElement("div", { class: "card" });
         const addOrRemoveButton = createElement("span", {
           class: "add-remove-button",
-          "data-card-item-id": item.id
+          "data-card-item-id": `${item.id}`
         });
 
         if (isAdded) {

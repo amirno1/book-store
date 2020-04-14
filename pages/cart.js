@@ -15,7 +15,7 @@ const renderCart = () => {
   mainWrapper.innerHTML = cartTemplate;
   if (!cart.length) {
     const cartPageTableWrapper = document.querySelector(".cart-table-wrapper");
-    cartPageTableWrapper.innerHTML += `<h1>There is no item in your cart</h1>`;
+    cartPageTableWrapper.innerHTML += `<h1 class="cart-page-no-item">There is no item in your cart</h1>`;
   } else {
   }
   const cartTable = document.querySelector(".cart-page-table");
@@ -39,9 +39,9 @@ const renderCart = () => {
     const itemTotal = createElement("td", { class: "cart-page-item-total" });
     itemTitle.innerHTML = item.title;
     itemImage.src = item.image;
-    itemPrice.innerHTML = `€${item.price}`;
+    itemPrice.innerHTML = `€ ${item.price}`;
     itemAmount.innerHTML = item.amount;
-    itemTotal.innerHTML = `€${item.price * item.amount}`;
+    itemTotal.innerHTML = `€ ${item.price * item.amount}`;
     appendChildren(itemTitleWrapper, [itemImage, itemTitle]);
     appendChildren(itemRow, [
       itemTitleWrapper,
@@ -58,6 +58,6 @@ const renderCart = () => {
 
 const cartPageUpdateItemTotal = (item, itemAmountElement, itemTotal) => {
   itemAmountElement.addEventListener("click", () => {
-    itemTotal.innerHTML = item.price * item.amount;
+    itemTotal.innerHTML = `€ ${item.price * item.amount}`;
   });
 };
