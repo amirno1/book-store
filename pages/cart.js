@@ -54,6 +54,7 @@ const renderCart = () => {
     cartPageUpdateItemTotal(item, itemPlus, itemTotal);
     cartTable.appendChild(itemRow);
   });
+  const priceAndPayment = createElement("div", { class: "price-and-payment" });
   const totalCartPricewrapper = createElement("div", {
     class: "total-cart-price-wrapper"
   });
@@ -71,8 +72,14 @@ const renderCart = () => {
   totalCartPrice.innerHTML =
     totalItemsPrice % 1 !== 0 ? totalItemsPrice.toFixed(2) : totalItemsPrice;
   appendChildren(totalCartPricewrapper, [totalCartPriceText, totalCartPrice]);
-  mainWrapper.appendChild(totalCartPricewrapper);
+  const goToPayment = createElement("div", {
+    class: "cart-page-go-to-payment"
+  });
+  goToPayment.innerHTML = `Go To The Payment <ion-icon name="chevron-forward-outline"></ion-icon>`;
+  appendChildren(priceAndPayment, [totalCartPricewrapper, goToPayment]);
+  mainWrapper.appendChild(priceAndPayment);
 };
+
 const totalItemsHandler = () => {
   const totalCartPriceElement = document.querySelector(".total-cart-price");
   let totalCartPrice = 0;
@@ -82,6 +89,7 @@ const totalItemsHandler = () => {
   totalCartPriceElement.innerHTML =
     totalCartPrice % 1 !== 0 ? totalCartPrice.toFixed(2) : totalCartPrice;
 };
+
 const cartPageUpdateItemTotal = (item, itemAmountElement, itemTotal) => {
   itemAmountElement.addEventListener("click", () => {
     itemTotal.innerHTML = `€ ${item.price * item.amount}`;
