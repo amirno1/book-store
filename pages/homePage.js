@@ -339,11 +339,11 @@ const checkForWarning = () => {
 
   if (searchWord) {
     warning.style.opacity = "0";
-    warning.style.left = "1%";
+    warning.style.left = "-11%";
     searchBar.style.border = "";
   } else {
     warning.style.opacity = "1";
-    warning.style.left = "9%";
+    warning.style.left = "-3%";
     searchBar.style.border = "2px solid red";
   }
 };

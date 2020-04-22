@@ -4,5 +4,7 @@ window.onpopstate = () => {
   } else if (window.location.pathname === "/") {
     renderHome();
     renderBooks(searchWord);
+  } else if (window.location.pathname === "/cart") {
+    renderCart();
   }
 };

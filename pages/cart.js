@@ -20,8 +20,14 @@ const renderCart = () => {
   }
   const cartTable = document.querySelector(".cart-page-table");
   cart.map(item => {
-    const itemRow = createElement("tr", { "data-cart-page-item-id": item.id });
+    const itemRow = createElement("tr", {
+      class: "cart-page-table-row",
+      "data-cart-page-item-id": item.id
+    });
     const itemImage = createElement("img", { class: "cart-page-item-image" });
+    itemImage.addEventListener("click", () => {
+      navigateToBookPage(item.id);
+    });
     const itemMinus = createElement("span", {
       class: "cart-item-amount-minus"
     });
@@ -29,6 +35,9 @@ const renderCart = () => {
     const itemPlus = createElement("span", { class: "cart-item-amount-plus" });
     itemPlus.innerHTML = `<ion-icon name="add-circle-outline"></ion-icon>`;
     const itemTitle = createElement("p", { class: "cart-page-item-title" });
+    itemTitle.addEventListener("click", () => {
+      navigateToBookPage(item.id);
+    });
     const itemTitleWrapper = createElement("td", {
       class: "cart-page-item-title-wrapper"
     });
