@@ -83,9 +83,12 @@ const addToCartBox = item => {
   });
 
   const cartItemImage = createElement("img", {
-    class: "cart-item-amount"
+    class: "cart-item-image"
   });
   cartItemImage.src = item.image;
+  cartItemImage.addEventListener("click", () => {
+    navigateToBookPage(item.id);
+  });
 
   cartItemAmount.innerHTML = item.amount;
 
@@ -183,6 +186,9 @@ function renderHome() {
   if (cart.length !== 0) {
     cart.forEach(item => addToCartBox(item));
     cartBox.style.opacity = "1";
+    // setTimeout(() => {
+    //   cartBox.style.opacity = "0";
+    // }, 2000);
   }
   if (searchWord) {
     searchBar.value = searchWord;
@@ -285,6 +291,9 @@ async function renderBooks(bookName) {
             addOrRemoveButton.innerHTML = `€ ${itemPrice} <span class="fa fa-cart-plus"></span>`;
           } else {
             cartBox.style.opacity = "1";
+            // setTimeout(() => {
+            //   cartBox.style.opacity = "0";
+            // }, 2000);
             addOrRemoveButton.style.backgroundColor = !isAdded
               ? "#c3063f"
               : "#6c9a36";

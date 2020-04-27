@@ -50,7 +50,7 @@ const renderCart = () => {
     itemImage.src = item.image;
     itemPrice.innerHTML = `€ ${item.price}`;
     itemAmount.innerHTML = item.amount;
-    itemTotal.innerHTML = `€ ${item.price * item.amount}`;
+    itemTotal.innerHTML = `€ ${(item.price * item.amount).toFixed(2)}`;
     appendChildren(itemTitleWrapper, [itemImage, itemTitle]);
     appendChildren(itemRow, [
       itemTitleWrapper,
@@ -101,7 +101,7 @@ const totalItemsHandler = () => {
 
 const cartPageUpdateItemTotal = (item, itemAmountElement, itemTotal) => {
   itemAmountElement.addEventListener("click", () => {
-    itemTotal.innerHTML = `€ ${item.price * item.amount}`;
+    itemTotal.innerHTML = `€ ${(item.price * item.amount).toFixed(2)}`;
     totalItemsHandler();
   });
 };

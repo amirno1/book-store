@@ -36,7 +36,6 @@ body {
   width: 960px;
   margin: 250px auto;
   text-align: center;
-  position: relative;
 }
 
 .search-bar {
@@ -213,15 +212,14 @@ body {
 }
 .cart-box {
   opacity: 0;
-  z-index: 6;
   text-align: left;
   font-size: 12px;
-  position: fixed;
+  position: absolute;
   background-color: #4e4e50;
   color: #fff;
   width: 300px;
-  right: 4%;
-  top: 20%;
+  right: 2%;
+  top: 30%;
   padding: 10px;
   border-radius: 3px;
   max-height: 150px;
@@ -245,9 +243,10 @@ body {
 .cart-item-title {
   cursor: pointer;
 }
-.cart-item img {
+.cart-item-image {
   width: 30px;
   height: 30px;
+  cursor: pointer;
 }
 .cart-item-amount-wrapper span {
   margin-right: 10px;
@@ -318,8 +317,7 @@ body {
 .price-and-payment {
   width: 150px;
   color: #fff;
-  position: absolute;
-  right: 0;
+  float: right;
 }
 .cart-page-go-to-payment {
   background-color: #c3063f;
