@@ -23,6 +23,7 @@ navLogo.addEventListener("click", () => {
   searchWord = "";
   searchBar.value = "";
 });
+
 // creating home page template
 const homePageTemplate = () => `
     <div class="search-wrapper">
@@ -37,7 +38,6 @@ const homePageTemplate = () => `
       <button class="search-button">Search</button>
     </div>
     <div class="result"></div>`;
-
 const handleItemAmount = (
   item,
   minusElement,
@@ -129,7 +129,9 @@ const addToCart = (item, itemPrice) => {
       : "https://www.ottofrei.com/sc-app/extensions/VintenCloud/OttoFreiSuiteCommerceTheme/18.2.0/img/no_image_available.jpeg"
   };
   cart.push(currentBook);
-  addToCartBox(currentBook);
+  if (window.location.pathname === "/") {
+    addToCartBox(currentBook);
+  }
 };
 
 const removeFromCart = item => {
@@ -186,9 +188,6 @@ function renderHome() {
   if (cart.length !== 0) {
     cart.forEach(item => addToCartBox(item));
     cartBox.style.opacity = "1";
-    // setTimeout(() => {
-    //   cartBox.style.opacity = "0";
-    // }, 2000);
   }
   if (searchWord) {
     searchBar.value = searchWord;
@@ -291,9 +290,6 @@ async function renderBooks(bookName) {
             addOrRemoveButton.innerHTML = `€ ${itemPrice} <span class="fa fa-cart-plus"></span>`;
           } else {
             cartBox.style.opacity = "1";
-            // setTimeout(() => {
-            //   cartBox.style.opacity = "0";
-            // }, 2000);
             addOrRemoveButton.style.backgroundColor = !isAdded
               ? "#c3063f"
               : "#6c9a36";

@@ -12,6 +12,8 @@ let cachedBook;
 
 // Rendering book page according to what user selects
 const bookPageTemplate = book => {
+  const bookPageWrapper = createElement("div", { class: "book-page-wrapper" });
+
   const bookWrapper = createElement("div", { class: "book-wrapper" });
 
   const bookInfoWrapper = createElement("div", {
@@ -78,11 +80,42 @@ const bookPageTemplate = book => {
       }
     }
   });
-  bookInfoWrapper.appendChild(bookInfoTitlesWrapper);
-  bookInfoWrapper.appendChild(bookInfoItemsWrapper);
-  bookWrapper.appendChild(bookInfoWrapper);
-  bookWrapper.appendChild(bookImageWrapper);
-  return bookWrapper;
+  let isAdded = cart.find(item => item.id === book.id);
+  const bookPageAddOrRemoveWrapper = createElement("div", {
+    class: "book-page-add-or-remove-wrapper"
+  });
+
+  const bookPageAddOrRemove = document.createElement("span");
+  bookPageAddOrRemove.className = isAdded
+    ? "fas fa-trash-alt book-page-remove"
+    : "fa fa-cart-plus book-page-add";
+
+  bookPageAddOrRemove.addEventListener("click", () => {
+    const cartAmount = document.querySelector(".cart-amount");
+    if (!isAdded) {
+      const bookPrice = book.saleInfo.listPrice
+        ? book.saleInfo.listPrice.amount
+        : Math.round(Math.random() * 20) + 5;
+      addToCart(book, bookPrice);
+      bookPageAddOrRemove.className = "fas fa-trash-alt book-page-remove";
+      cartAmount.innerHTML = cart.length;
+    } else {
+      cart = cart.filter(cartItem => cartItem.id !== book.id);
+      bookPageAddOrRemove.className = "fa fa-cart-plus book-page-add";
+      cartAmount.innerHTML = cart.length;
+      cart.find(item => item.id === book.id);
+    }
+    isAdded = cart.find(item => item.id === book.id);
+  });
+  bookPageAddOrRemoveWrapper.appendChild(bookPageAddOrRemove);
+  appendChildren(bookInfoWrapper, [
+    bookInfoTitlesWrapper,
+    bookInfoItemsWrapper
+  ]);
+  appendChildren(bookWrapper, [bookInfoWrapper, bookImageWrapper]);
+  bookPageWrapper.appendChild(bookWrapper);
+  appendChildren(bookPageWrapper, [bookWrapper, bookPageAddOrRemoveWrapper]);
+  return bookPageWrapper;
 };
 const fetchBook = async bookId => {
   if (!cachedBook || bookId !== cachedBook.id) {
