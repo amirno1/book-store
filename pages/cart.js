@@ -84,7 +84,10 @@ const renderCart = () => {
   const goToPayment = createElement("div", {
     class: "cart-page-go-to-payment"
   });
-  goToPayment.innerHTML = `Go To The Payment <ion-icon name="chevron-forward-outline"></ion-icon>`;
+  goToPayment.innerHTML = `Go To Payment <ion-icon name="chevron-forward-outline"></ion-icon>`;
+  goToPayment.addEventListener("click", () => {
+    paymentHandler();
+  });
   appendChildren(priceAndPayment, [totalCartPricewrapper, goToPayment]);
   mainWrapper.appendChild(priceAndPayment);
 };
@@ -104,4 +107,42 @@ const cartPageUpdateItemTotal = (item, itemAmountElement, itemTotal) => {
     itemTotal.innerHTML = `€ ${(item.price * item.amount).toFixed(2)}`;
     totalItemsHandler();
   });
+};
+
+const paymentHandler = () => {
+  if (window.PaymentRequest) {
+    const supportedPaymentMethods = [
+      {
+        supportedMethods: ["basic-card"]
+      }
+    ];
+
+    const paymentDetails = {
+      total: {
+        label: "Total Cost",
+        amount: {
+          currency: "EUR",
+          value: "0.01"
+        }
+      }
+    };
+    const options = {};
+
+    const paymentRequest = new PaymentRequest(
+      supportedPaymentMethods,
+      paymentDetails,
+      options
+    );
+
+    paymentRequest
+      .show()
+      .then(paymentResponse => {
+        paymentResponse.complete("success");
+      })
+      .then(() => {
+        const mainWrapper = document.querySelector(".main-wrapper");
+        mainWrapper.innerHTML = "Payment Successful";
+      });
+  } else {
+  }
 };
