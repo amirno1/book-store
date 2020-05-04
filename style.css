@@ -327,6 +327,13 @@ body {
 .cart-page-item-title-wrapper {
   display: flex;
 }
+.cart-page-item-remove {
+  padding: 5px;
+  border-radius: 5px;
+  color: #fff;
+  background-color: #c3063f;
+  cursor: pointer;
+}
 .cart-page-no-item {
   padding: 50px;
 }

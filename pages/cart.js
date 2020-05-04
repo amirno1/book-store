@@ -1,5 +1,4 @@
 const cartTemplate = `
-<h1 class="cart-page-header">Cart</h1>
 <div class="cart-table-wrapper">
   <table class="cart-page-table">
     <tr class="cart-page-head-row">
@@ -7,6 +6,7 @@ const cartTemplate = `
       <th class="cart-page-header-row">Price</th>
       <th class="cart-page-header-row">Quantity</th>
       <th class="cart-page-header-row">Total</th>
+      <th class="cart-page-header-row">Remove</th>
     </tr>
   </table>
 </div>`;
@@ -51,12 +51,25 @@ const renderCart = () => {
     itemPrice.innerHTML = `€ ${item.price}`;
     itemAmount.innerHTML = item.amount;
     itemTotal.innerHTML = `€ ${(item.price * item.amount).toFixed(2)}`;
+    const itemRemove = createElement("td");
+    const itemRemoveButton = createElement("button", {
+      class: "cart-page-item-remove"
+    });
+    itemRemoveButton.innerHTML = "Remove";
+    itemRemoveButton.addEventListener("click", () => {
+      removeFromCart(item);
+      totalItemsHandler();
+      cartAmount = document.querySelector(".cart-amount").innerHTML =
+        cart.length;
+    });
+    itemRemove.appendChild(itemRemoveButton);
     appendChildren(itemTitleWrapper, [itemImage, itemTitle]);
     appendChildren(itemRow, [
       itemTitleWrapper,
       itemPrice,
       itemAmountwrapper,
-      itemTotal
+      itemTotal,
+      itemRemove
     ]);
     handleItemAmount(item, itemMinus, itemPlus, itemAmount);
     cartPageUpdateItemTotal(item, itemMinus, itemTotal);

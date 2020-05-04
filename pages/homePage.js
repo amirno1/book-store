@@ -148,9 +148,10 @@ const removeFromCart = item => {
       `[data-card-item-id="${item.id}"]`
     );
     cartBoxItem.parentElement.removeChild(cartBoxItem);
-
-    cardItemButton.style.backgroundColor = "#6c9a36";
-    cardItemButton.innerHTML = `€ ${item.price}`;
+    if (cardItemButton) {
+      cardItemButton.style.backgroundColor = "#6c9a36";
+      cardItemButton.innerHTML = `€ ${item.price}`;
+    }
   }
 
   if (cart.length === 0) {
