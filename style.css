@@ -336,6 +336,8 @@ body {
 }
 .cart-page-no-item {
   padding: 50px;
+  background-color: #4e4e50;
+  color: #fff;
 }
 .total-cart-price-wrapper {
   padding: 25px 0;
@@ -359,9 +361,14 @@ body {
   vertical-align: middle;
 }
 .payment-response {
-  padding: 40px;
+  padding: 20px;
   border-radius: 5px;
   color: #fff;
+  width: 700px;
+  margin: 0 auto;
+}
+.payment-response h1 {
+  margin-bottom: 10px;
 }
 .payment-successful {
   background-color: #6c9a36;
