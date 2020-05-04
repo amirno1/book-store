@@ -1,12 +1,10 @@
 let searchWord = "";
 let cart = [];
-let cartShown;
 let cachedBooks;
+let cartAmount = (document.querySelector(".cart-amount").innerHTML =
+  cart.length);
 
 const mainWrapper = document.querySelector(".main-wrapper");
-
-const cartAmount = (document.querySelector(".cart-amount").innerHTML =
-  cart.length);
 const cartButtonHomePage = document.querySelector(".fa-shopping-cart");
 cartButtonHomePage.addEventListener("click", () => {
   navigateToCartPage();
