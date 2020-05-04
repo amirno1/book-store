@@ -86,7 +86,8 @@ const renderCart = () => {
   });
   goToPayment.innerHTML = `Go To Payment <ion-icon name="chevron-forward-outline"></ion-icon>`;
   goToPayment.addEventListener("click", () => {
-    paymentHandler(totalItemsPrice);
+    window.history.pushState({}, null, "/payment");
+    renderPayment(totalItemsPrice);
   });
   appendChildren(priceAndPayment, [totalCartPricewrapper, goToPayment]);
   mainWrapper.appendChild(priceAndPayment);
@@ -107,78 +108,4 @@ const cartPageUpdateItemTotal = (item, itemAmountElement, itemTotal) => {
     itemTotal.innerHTML = `€ ${(item.price * item.amount).toFixed(2)}`;
     totalItemsHandler();
   });
-};
-
-const paymentHandler = totalPrice => {
-  const mainWrapper = document.querySelector(".main-wrapper");
-  if (window.PaymentRequest) {
-    const supportedPaymentMethods = [
-      {
-        supportedMethods: ["basic-card"],
-        data: {
-          supportedNetworks: [
-            "visa",
-            "mastercard",
-            "amex",
-            "discover",
-            "diners",
-            "jcb",
-            "unionpay"
-          ]
-        }
-      }
-    ];
-
-    const handleDisplayItems = () => {
-      const itemsToDisplay = cart.map(item => {
-        return {
-          label: item.title,
-          amount: { currency: "EUR", value: item.price }
-        };
-      });
-      return itemsToDisplay;
-    };
-    handleDisplayItems();
-    const paymentDetails = {
-      displayItems: handleDisplayItems(),
-      total: {
-        label: "Total Cost",
-        amount: {
-          currency: "EUR",
-          value: `${totalPrice}`
-        }
-      }
-    };
-    const options = {};
-
-    const paymentRequest = new PaymentRequest(
-      supportedPaymentMethods,
-      paymentDetails,
-      options
-    );
-
-    paymentRequest
-      .show()
-      .then(paymentResponse => {
-        paymentResponse.complete("success");
-      })
-      .then(() => {
-        mainWrapper.innerHTML = `
-        <div class="payment-successful">
-        <h1>Payment Successful <i class="fas fa-check-circle"></i></h1>
-        <h3>You are being redirected to the homepage...</h3>
-        <div class="loader"></div>
-        </div>
-        `;
-        setTimeout(() => {
-          window.history.pushState({}, null, "/");
-          cart = [];
-          searchWord = "";
-          cartAmount = document.querySelector(".cart-amount").innerHTML =
-            cart.length;
-          renderHome();
-        }, 3000);
-      });
-  } else {
-  }
 };

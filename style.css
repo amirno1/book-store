@@ -351,11 +351,16 @@ body {
 .hydrated {
   vertical-align: middle;
 }
-.payment-successful {
-  background-color: #6c9a36;
+.payment-response {
   padding: 40px;
   border-radius: 5px;
   color: #fff;
+}
+.payment-successful {
+  background-color: #6c9a36;
+}
+.payment-denied {
+  background-color: #c3063f;
 }
 .loader {
   border: 5px solid #f3f3f3;
