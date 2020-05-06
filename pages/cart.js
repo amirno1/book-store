@@ -1,4 +1,15 @@
 const cartTemplate = `
+<div class="payment-modal">
+  <div class="payment-modal-content">
+    <h2>There are no items in the shopping cart!!</h2>
+    <div class="payment-modal-button-wrapper">
+      <button class="modal-button continue-shopping-button">
+        Continue shopping
+      </button>
+      <button class="modal-button close-modal">Cancel</button>
+    </div>
+  </div>
+</div>
 <div class="cart-table-wrapper">
   <table class="cart-page-table">
     <tr class="cart-page-head-row">
@@ -13,48 +24,77 @@ const cartTemplate = `
 
 const renderCart = () => {
   mainWrapper.innerHTML = cartTemplate;
+
+  const paymentModal = document.querySelector(".payment-modal");
+  const continueShoppingButton = document.querySelector(
+    ".continue-shopping-button"
+  );
+  const closeModal = document.querySelector(".close-modal");
+
+  continueShoppingButton.addEventListener("click", () => {
+    window.history.pushState({}, null, "/");
+    renderHome();
+  });
+
+  closeModal.addEventListener("click", () => {
+    paymentModal.style.display = "none";
+  });
+
   if (!cart.length) {
     const cartPageTableWrapper = document.querySelector(".cart-table-wrapper");
-    cartPageTableWrapper.innerHTML += `<h1 class="cart-page-no-item">There is no item in your cart</h1>`;
+    cartPageTableWrapper.innerHTML += `<h1 class="cart-page-no-item">There are no items in your shopping cart</h1>`;
   } else {
   }
   const cartTable = document.querySelector(".cart-page-table");
+
   cart.map(item => {
     const itemRow = createElement("tr", {
       class: "cart-page-table-row",
       "data-cart-page-item-id": item.id
     });
+
     const itemImage = createElement("img", { class: "cart-page-item-image" });
+
     itemImage.addEventListener("click", () => {
       navigateToBookPage(item.id);
     });
+
     const itemMinus = createElement("span", {
       class: "cart-item-amount-minus"
     });
+
     itemMinus.innerHTML = `<ion-icon name="remove-circle-outline"></ion-icon>`;
     const itemPlus = createElement("span", { class: "cart-item-amount-plus" });
+
     itemPlus.innerHTML = `<ion-icon name="add-circle-outline"></ion-icon>`;
     const itemTitle = createElement("p", { class: "cart-page-item-title" });
+
     itemTitle.addEventListener("click", () => {
       navigateToBookPage(item.id);
     });
+
     const itemTitleWrapper = createElement("td", {
       class: "cart-page-item-title-wrapper"
     });
+
     const itemPrice = createElement("td");
     const itemAmount = createElement("span");
     const itemAmountwrapper = createElement("td");
+
     appendChildren(itemAmountwrapper, [itemMinus, itemAmount, itemPlus]);
     const itemTotal = createElement("td", { class: "cart-page-item-total" });
+
     itemTitle.innerHTML = item.title;
     itemImage.src = item.image;
     itemPrice.innerHTML = `€ ${item.price}`;
     itemAmount.innerHTML = item.amount;
     itemTotal.innerHTML = `€ ${(item.price * item.amount).toFixed(2)}`;
+
     const itemRemove = createElement("td");
     const itemRemoveButton = createElement("button", {
       class: "cart-page-item-remove"
     });
+
     itemRemoveButton.innerHTML = "Remove";
     itemRemoveButton.addEventListener("click", () => {
       removeFromCart(item);
@@ -62,6 +102,7 @@ const renderCart = () => {
       cartAmount = document.querySelector(".cart-amount").innerHTML =
         cart.length;
     });
+
     itemRemove.appendChild(itemRemoveButton);
     appendChildren(itemTitleWrapper, [itemImage, itemTitle]);
     appendChildren(itemRow, [
@@ -71,9 +112,12 @@ const renderCart = () => {
       itemTotal,
       itemRemove
     ]);
+
     handleItemAmount(item, itemMinus, itemPlus, itemAmount);
+
     cartPageUpdateItemTotal(item, itemMinus, itemTotal);
     cartPageUpdateItemTotal(item, itemPlus, itemTotal);
+
     cartTable.appendChild(itemRow);
   });
   const priceAndPayment = createElement("div", { class: "price-and-payment" });
@@ -87,21 +131,30 @@ const renderCart = () => {
   const totalCartPrice = createElement("span", {
     class: "total-cart-price"
   });
+
   let totalItemsPrice = 0;
   cart.forEach(item => {
     totalItemsPrice += item.amount * item.price;
   });
+
   totalCartPrice.innerHTML =
     totalItemsPrice % 1 !== 0 ? totalItemsPrice.toFixed(2) : totalItemsPrice;
   appendChildren(totalCartPricewrapper, [totalCartPriceText, totalCartPrice]);
   const goToPayment = createElement("div", {
     class: "cart-page-go-to-payment"
   });
+
   goToPayment.innerHTML = `Go To Payment <ion-icon name="chevron-forward-outline"></ion-icon>`;
+
   goToPayment.addEventListener("click", () => {
-    window.history.pushState({}, null, "/payment");
-    renderPayment(totalItemsPrice);
+    if (cart.length === 0) {
+      paymentModal.style.display = "block";
+    } else {
+      window.history.pushState({}, null, "/payment");
+      renderPayment(totalItemsPrice);
+    }
   });
+
   appendChildren(priceAndPayment, [totalCartPricewrapper, goToPayment]);
   mainWrapper.appendChild(priceAndPayment);
 };
