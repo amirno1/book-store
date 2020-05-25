@@ -61,35 +61,42 @@ const paymentHandler = () => {
         paymentResponse.complete("success");
       })
       .then(() => {
-        mainWrapper.innerHTML = `
-        <div class="payment-response payment-successful">
-        <h1>Payment Successful <i class="fas fa-check-circle"></i></h1>
-        <h4>You are being redirected to the homepage...</h3>
-        <div class="loader"></div>
-        </div>
-        `;
-        setTimeout(() => {
-          window.history.pushState({}, null, "/");
-          cart = [];
-          searchWord = "";
-          cartAmount = document.querySelector(".cart-amount").innerHTML =
-            cart.length;
-          renderHome();
-        }, 2000);
+        handlePaymentSuccess();
       })
       .catch(() => {
-        mainWrapper.innerHTML = `
-        <div class="payment-response payment-denied">
-        <h1>Payment denied <i class="fas fa-ban"></i></h1>
-        <h4>You are being redirected to your cart...</h4>
-        <div class="loader"></div>
-        </div>
-        `;
-        setTimeout(() => {
-          window.history.pushState({}, null, "/cart");
-          renderCart();
-        }, 2000);
+        handlePaymentDenied();
       });
   } else {
   }
+
+  const handlePaymentDenied = () => {
+    mainWrapper.innerHTML = `
+      <div class="payment-response payment-denied">
+      <h1>Payment denied <i class="fas fa-ban"></i></h1>
+      <h4>You are being redirected to your cart...</h4>
+      <div class="loader"></div>
+      </div>
+      `;
+    setTimeout(() => {
+      window.history.pushState({}, null, "/cart");
+      renderCart();
+    }, 2000);
+  };
+  const handlePaymentSuccess = () => {
+    mainWrapper.innerHTML = `
+      <div class="payment-response payment-successful">
+      <h1>Payment Successful <i class="fas fa-check-circle"></i></h1>
+      <h4>You are being redirected to the homepage...</h3>
+      <div class="loader"></div>
+      </div>
+      `;
+    setTimeout(() => {
+      window.history.pushState({}, null, "/");
+      cart = [];
+      searchWord = "";
+      cartAmount = document.querySelector(".cart-amount").innerHTML =
+        cart.length;
+      renderHome();
+    }, 2000);
+  };
 };
