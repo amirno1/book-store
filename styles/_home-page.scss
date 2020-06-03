@@ -1,0 +1,161 @@
+@import "./variables";
+.home-page {
+  &__search-bar {
+    width: 500px;
+    height: 40px;
+    border-radius: 5px;
+    border: none;
+    box-shadow: 1px 1px 1px;
+    font-size: 20px;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  &__warning {
+    color: $pinkRed;
+    opacity: 0;
+    position: absolute;
+    background-color: $textWhite;
+    border-radius: 5px;
+    padding: 5px;
+    left: -11%;
+    transition: all 0.5s;
+  }
+  &__search-button {
+    width: 100px;
+    height: 40px;
+    font-size: 16px;
+    display: block;
+    margin: 0 auto;
+    border-radius: 5px;
+    border: none;
+    box-shadow: 1px 1px 1px #000;
+    background-color: $buttonRed;
+    color: $textWhite;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  &__search-button:hover {
+    background-color: $buttonRedHover;
+  }
+  &__search-button:active {
+    transform: translateY(4px);
+  }
+  &__cards {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 40px auto;
+    width: 800px;
+  }
+  &__card {
+    position: relative;
+    cursor: pointer;
+    margin: 0 20px 20px 0;
+    width: calc(100% / 4 - 15px);
+    height: 200px;
+    transition: all 0.4s;
+    z-index: 2;
+    &:nth-child(4n + 0) {
+      margin: 0 0 20px 0;
+    }
+    &:hover {
+      transform: scale(1.05);
+    }
+    &:hover .home-page__add-remove-button {
+      opacity: 1;
+    }
+    &:hover .home-page__card-book-title {
+      opacity: 1;
+    }
+    &:hover .home-page__card-book-image {
+      filter: blur(1px);
+      -webkit-filter: blur(1px);
+    }
+  }
+  &__card-book-image {
+    filter: none;
+    transition: 0.5s;
+    border-radius: 5px;
+    height: 100%;
+    width: 160px;
+  }
+  &__card-book-title {
+    position: absolute;
+    opacity: 0;
+    background-color: $pinkRed;
+    color: $textWhite;
+    transition: 0.5s;
+    bottom: 0;
+    width: 160px;
+    font-size: 10px;
+    border-radius: 0 0 5px 5px;
+    padding: 10px 0;
+    z-index: 3;
+  }
+  &__cart-box {
+    opacity: 0;
+    text-align: left;
+    font-size: 12px;
+    position: absolute;
+    background-color: $backgroundGray;
+    color: $textWhite;
+    width: 300px;
+    right: 2%;
+    top: 25%;
+    padding: 10px;
+    border-radius: 3px;
+    max-height: 150px;
+    overflow: scroll;
+    transition: all 0.3s;
+  }
+
+  &__add-remove-button {
+    position: absolute;
+    background-color: $lightGreen;
+    color: $textWhite;
+    font-weight: bold;
+    font-size: 13px;
+    top: 5%;
+    padding: 5px;
+    border-radius: 0 5px 5px 0;
+    transition: all 0.5s;
+    opacity: 0;
+    z-index: 3;
+    &:hover {
+      padding: 5px 15px;
+    }
+  }
+  &__cart-item {
+    border-bottom: 1px solid $borderGray;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &__cart-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+  &__cart-item-title {
+    cursor: pointer;
+  }
+  &__cart-item-image {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+  }
+  &__cart-item-amount-wrapper {
+    span {
+      margin-right: 10px;
+    }
+  }
+  &__cart-item-amount-wrapper {
+    font-size: 14px;
+  }
+  &__cart-item-amount-minus,
+  &__cart-item-amount-plus {
+    padding: 5px;
+    cursor: pointer;
+  }
+}

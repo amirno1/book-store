@@ -1,0 +1,20 @@
+@import "./variables";
+
+.payment-page {
+  &__response {
+    padding: 20px;
+    border-radius: 5px;
+    color: $textWhite;
+    width: 700px;
+    margin: 0 auto;
+  }
+  &__response h1 {
+    margin-bottom: 10px;
+  }
+  &__successful {
+    background-color: $lightGreen;
+  }
+  &__denied {
+    background-color: $pinkRed;
+  }
+}

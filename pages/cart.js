@@ -1,23 +1,23 @@
 const cartTemplate = `
-<div class="payment-modal">
-  <div class="payment-modal-content">
+<div class="cart-page__payment-modal">
+  <div class="cart-page__payment-modal-content">
     <h2>There are no items in the shopping cart!!</h2>
-    <div class="payment-modal-button-wrapper">
-      <button class="modal-button continue-shopping-button">
+    <div class="cart-page__payment-modal-button-wrapper">
+      <button class="cart-page__modal-button cart-page__continue-shopping-button">
         Continue shopping
       </button>
-      <button class="modal-button close-modal">Cancel</button>
+      <button class="cart-page__modal-button cart-page__close-payment-modal">Cancel</button>
     </div>
   </div>
 </div>
-<div class="cart-table-wrapper">
-  <table class="cart-page-table">
-    <tr class="cart-page-head-row">
-      <th class="cart-page-header-row">Book Name</th>
-      <th class="cart-page-header-row">Price</th>
-      <th class="cart-page-header-row">Quantity</th>
-      <th class="cart-page-header-row">Total</th>
-      <th class="cart-page-header-row">Remove</th>
+<div class="cart-page__table-wrapper">
+  <table class="cart-page__table">
+    <tr class="cart-page__head-row">
+      <th class="cart-page__header-row">Book Name</th>
+      <th class="cart-page__header-row">Price</th>
+      <th class="cart-page__header-row">Quantity</th>
+      <th class="cart-page__header-row">Total</th>
+      <th class="cart-page__header-row">Remove</th>
     </tr>
   </table>
 </div>`;
@@ -25,11 +25,11 @@ const cartTemplate = `
 const renderCart = () => {
   mainWrapper.innerHTML = cartTemplate;
 
-  const paymentModal = document.querySelector(".payment-modal");
+  const paymentModal = document.querySelector(".cart-page__payment-modal");
   const continueShoppingButton = document.querySelector(
-    ".continue-shopping-button"
+    ".cart-page__continue-shopping-button"
   );
-  const closeModal = document.querySelector(".close-modal");
+  const closeModal = document.querySelector(".cart-page__close-payment-modal");
 
   continueShoppingButton.addEventListener("click", () => {
     window.history.pushState({}, null, "/");
@@ -41,40 +41,44 @@ const renderCart = () => {
   });
 
   if (!cart.length) {
-    const cartPageTableWrapper = document.querySelector(".cart-table-wrapper");
-    cartPageTableWrapper.innerHTML += `<h1 class="cart-page-no-item">There are no items in your shopping cart</h1>`;
+    const cartPageTableWrapper = document.querySelector(
+      ".cart-page__table-wrapper"
+    );
+    cartPageTableWrapper.innerHTML += `<h1 class="cart-page__no-item">There are no items in your shopping cart</h1>`;
   } else {
   }
-  const cartTable = document.querySelector(".cart-page-table");
+  const cartTable = document.querySelector(".cart-page__table");
 
   cart.map(item => {
     const itemRow = createElement("tr", {
-      class: "cart-page-table-row",
-      "data-cart-page-item-id": item.id
+      class: "cart-page__table-row",
+      "data-cart-page__item-id": item.id
     });
 
-    const itemImage = createElement("img", { class: "cart-page-item-image" });
+    const itemImage = createElement("img", { class: "cart-page__item-image" });
 
     itemImage.addEventListener("click", () => {
       navigateToBookPage(item.id);
     });
 
     const itemMinus = createElement("span", {
-      class: "cart-item-amount-minus"
+      class: "cart-page__item-amount-minus"
     });
 
     itemMinus.innerHTML = `<ion-icon name="remove-circle-outline"></ion-icon>`;
-    const itemPlus = createElement("span", { class: "cart-item-amount-plus" });
+    const itemPlus = createElement("span", {
+      class: "cart-page__item-amount-plus"
+    });
 
     itemPlus.innerHTML = `<ion-icon name="add-circle-outline"></ion-icon>`;
-    const itemTitle = createElement("p", { class: "cart-page-item-title" });
+    const itemTitle = createElement("p", { class: "cart-page__item-title" });
 
     itemTitle.addEventListener("click", () => {
       navigateToBookPage(item.id);
     });
 
     const itemTitleWrapper = createElement("td", {
-      class: "cart-page-item-title-wrapper"
+      class: "cart-page__item-title-wrapper"
     });
 
     const itemPrice = createElement("td");
@@ -82,7 +86,7 @@ const renderCart = () => {
     const itemAmountwrapper = createElement("td");
 
     appendChildren(itemAmountwrapper, [itemMinus, itemAmount, itemPlus]);
-    const itemTotal = createElement("td", { class: "cart-page-item-total" });
+    const itemTotal = createElement("td", { class: "cart-page__item-total" });
 
     itemTitle.innerHTML = item.title;
     itemImage.src = item.image;
@@ -92,14 +96,14 @@ const renderCart = () => {
 
     const itemRemove = createElement("td");
     const itemRemoveButton = createElement("button", {
-      class: "cart-page-item-remove"
+      class: "cart-page__item-remove"
     });
 
     itemRemoveButton.innerHTML = "Remove";
     itemRemoveButton.addEventListener("click", () => {
       removeFromCart(item);
       totalItemsHandler();
-      cartAmount = document.querySelector(".cart-amount").innerHTML =
+      cartAmount = document.querySelector(".nav-bar__cart-amount").innerHTML =
         cart.length;
     });
 
@@ -120,16 +124,18 @@ const renderCart = () => {
 
     cartTable.appendChild(itemRow);
   });
-  const priceAndPayment = createElement("div", { class: "price-and-payment" });
+  const priceAndPayment = createElement("div", {
+    class: "cart-page__price-and-payment"
+  });
   const totalCartPricewrapper = createElement("div", {
-    class: "total-cart-price-wrapper"
+    class: "cart-page__total-cart-price-wrapper"
   });
   const totalCartPriceText = createElement("span", {
-    class: "total-cart-price-text"
+    class: "cart-page__total-cart-price-text"
   });
   totalCartPriceText.innerHTML = "Total € ";
   const totalCartPrice = createElement("span", {
-    class: "total-cart-price"
+    class: "cart-page__total-cart-price"
   });
 
   let totalItemsPrice = 0;
@@ -141,7 +147,7 @@ const renderCart = () => {
     totalItemsPrice % 1 !== 0 ? totalItemsPrice.toFixed(2) : totalItemsPrice;
   appendChildren(totalCartPricewrapper, [totalCartPriceText, totalCartPrice]);
   const goToPayment = createElement("div", {
-    class: "cart-page-go-to-payment"
+    class: "cart-page__go-to-payment"
   });
 
   goToPayment.innerHTML = `Go To Payment <ion-icon name="chevron-forward-outline"></ion-icon>`;
@@ -160,7 +166,9 @@ const renderCart = () => {
 };
 
 const totalItemsHandler = () => {
-  const totalCartPriceElement = document.querySelector(".total-cart-price");
+  const totalCartPriceElement = document.querySelector(
+    ".cart-page__total-cart-price"
+  );
   let totalCartPrice = 0;
   cart.forEach(item => {
     totalCartPrice += item.amount * item.price;

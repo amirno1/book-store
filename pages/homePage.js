@@ -1,11 +1,11 @@
 let searchWord = "";
 let cart = [];
 let cachedBooks;
-let cartAmount = (document.querySelector(".cart-amount").innerHTML =
+let cartAmount = (document.querySelector(".nav-bar__cart-amount").innerHTML =
   cart.length);
 
 const mainWrapper = document.querySelector(".main-wrapper");
-const cartButtonHomePage = document.querySelector(".fa-shopping-cart");
+const cartButtonHomePage = document.querySelector(".nav-bar__shopping-cart");
 cartButtonHomePage.addEventListener("click", () => {
   navigateToCartPage();
 });
@@ -13,29 +13,29 @@ const navigateToCartPage = () => {
   window.history.pushState({}, null, "/cart");
   renderCart();
 };
-const navLogo = document.querySelector(".amir-books-logo");
+const navLogo = document.querySelector(".nav-bar__amir-books-logo");
 navLogo.addEventListener("click", () => {
   window.history.pushState({}, null, `/`);
   renderHome();
-  const searchBar = document.querySelector(".search-bar");
+  const searchBar = document.querySelector(".home-page__search-bar");
   searchWord = "";
   searchBar.value = "";
 });
 
 // creating home page template
 const homePageTemplate = () => `
-    <div class="search-wrapper">
-      <div class="cart-box"></div>
+    <div class="home-page__search-wrapper">
+      <div class="home-page__cart-box"></div>
       <input
-        class="search-bar"
+        class="home-page__search-bar"
         type="text"
         name="search-bar"
         id="search-bar"
       />
-      <span class="warning">Please type a book name here >></span>
-      <button class="search-button">Search</button>
+      <span class="home-page__warning">Please type a book name here >></span>
+      <button class="home-page__search-button">Search</button>
     </div>
-    <div class="result"></div>`;
+    <div class="home-page__cards"></div>`;
 const handleItemAmount = (
   item,
   minusElement,
@@ -48,7 +48,7 @@ const handleItemAmount = (
     } else {
       removeFromCart(item);
     }
-    const cartAmount = document.querySelector(".cart-amount");
+    const cartAmount = document.querySelector(".nav-bar__cart-amount");
     cartAmount.innerHTML = cart.length;
   });
   plusElement.addEventListener("click", () => {
@@ -57,20 +57,20 @@ const handleItemAmount = (
 };
 
 const addToCartBox = item => {
-  const cartBox = document.querySelector(".cart-box");
+  const cartBox = document.querySelector(".home-page__cart-box");
   const cartItem = createElement("div", {
-    class: "cart-item",
-    "data-cart-item-id": `${item.id}`
+    class: "home-page__cart-item",
+    "data-home-page__cart-item-id": `${item.id}`
   });
   const cartItemAmountWrapper = createElement("div", {
-    class: "cart-item-amount-wrapper"
+    class: "home-page__cart-item-amount-wrapper"
   });
 
   const cartItemAmount = createElement("span", {
-    class: "cart-item-amount"
+    class: "home-page__cart-item-amount"
   });
   const cartItemTitle = createElement("p", {
-    class: "cart-item-title"
+    class: "home-page__cart-item-title"
   });
 
   cartItemTitle.innerHTML =
@@ -81,7 +81,7 @@ const addToCartBox = item => {
   });
 
   const cartItemImage = createElement("img", {
-    class: "cart-item-image"
+    class: "home-page__cart-item-image"
   });
   cartItemImage.src = item.image;
   cartItemImage.addEventListener("click", () => {
@@ -91,11 +91,11 @@ const addToCartBox = item => {
   cartItemAmount.innerHTML = item.amount;
 
   const cartItemAmountMinus = createElement("span", {
-    class: "cart-item-amount-minus"
+    class: "home-page__cart-item-amount-minus"
   });
   cartItemAmountMinus.innerHTML = `<ion-icon name="remove-circle-outline"></ion-icon>`;
   const cartItemAmountPlus = createElement("span", {
-    class: "cart-item-amount-plus"
+    class: "home-page__cart-item-amount-plus"
   });
   cartItemAmountPlus.innerHTML = `<ion-icon name="add-circle-outline"></ion-icon>`;
 
@@ -137,15 +137,15 @@ const removeFromCart = item => {
 
   if (window.location.pathname === "/cart") {
     const cartPageItem = document.querySelector(
-      `[data-cart-page-item-id="${item.id}"]`
+      `[data-cart-page__item-id="${item.id}"]`
     );
     cartPageItem.parentElement.removeChild(cartPageItem);
   } else {
     const cartBoxItem = document.querySelector(
-      `[data-cart-item-id="${item.id}"]`
+      `[data-home-page__cart-item-id="${item.id}"]`
     );
     const cardItemButton = document.querySelector(
-      `[data-card-item-id="${item.id}"]`
+      `[data-home-page__card-item-id="${item.id}"]`
     );
     cartBoxItem.parentElement.removeChild(cartBoxItem);
     if (cardItemButton) {
@@ -155,14 +155,14 @@ const removeFromCart = item => {
   }
 
   if (cart.length === 0) {
-    const cartBox = document.querySelector(".cart-box");
+    const cartBox = document.querySelector(".home-page__cart-box");
     if (cartBox) {
       cartBox.style.opacity = "0";
     } else {
       const cartPageTableWrapper = document.querySelector(
-        ".cart-table-wrapper"
+        ".cart-page__table-wrapper"
       );
-      cartPageTableWrapper.innerHTML += `<h1 class="cart-page-no-item">There is no item in your cart</h1>`;
+      cartPageTableWrapper.innerHTML += `<h1 class="cart-page__no-item">There is no item in your cart</h1>`;
     }
   }
 };
@@ -178,11 +178,11 @@ const createElement = (elementType, attributes) => {
 // render home page template
 function renderHome() {
   mainWrapper.innerHTML = homePageTemplate();
-  const cartBox = document.querySelector(".cart-box");
+  const cartBox = document.querySelector(".home-page__cart-box");
 
-  const searchBar = document.querySelector(".search-bar");
-  const searchButton = document.querySelector(".search-button");
-  const result = document.querySelector(".result");
+  const searchBar = document.querySelector(".home-page__search-bar");
+  const searchButton = document.querySelector(".home-page__search-button");
+  const cards = document.querySelector(".home-page__cards");
   searchBar.placeholder = "Enter a book name to search";
   if (cart.length !== 0) {
     cart.forEach(item => addToCartBox(item));
@@ -202,7 +202,7 @@ function renderHome() {
 
   searchBar.addEventListener("keypress", e => {
     if (e.key === "Enter") {
-      result.innerHTML = "";
+      cards.innerHTML = "";
       cachedBooks = null;
       renderBooks(searchWord);
     }
@@ -212,7 +212,7 @@ function renderHome() {
   });
 
   searchButton.addEventListener("click", () => {
-    result.innerHTML = "";
+    cards.innerHTML = "";
     cachedBooks = null;
     renderBooks(searchWord);
   });
@@ -253,10 +253,10 @@ async function renderBooks(bookName) {
         const itemPrice = item.saleInfo.listPrice
           ? item.saleInfo.listPrice.amount
           : Math.round(Math.random() * 20) + 5;
-        const card = createElement("div", { class: "card" });
+        const card = createElement("div", { class: "home-page__card" });
         const addOrRemoveButton = createElement("span", {
-          class: "add-remove-button",
-          "data-card-item-id": `${item.id}`
+          class: "home-page__add-remove-button",
+          "data-home-page__card-item-id": `${item.id}`
         });
 
         if (isAdded) {
@@ -280,8 +280,8 @@ async function renderBooks(bookName) {
         });
         addOrRemoveButton.addEventListener("click", e => {
           e.stopPropagation();
-          const cartAmount = document.querySelector(".cart-amount");
-          const cartBox = document.querySelector(".cart-box");
+          const cartAmount = document.querySelector(".nav-bar__cart-amount");
+          const cartBox = document.querySelector(".home-page__cart-box");
           isAdded = cart.find(book => book.id === item.id);
           if (isAdded) {
             addOrRemoveButton.style.backgroundColor = "#6c9a36";
@@ -304,11 +304,11 @@ async function renderBooks(bookName) {
         card.appendChild(addOrRemoveButton);
 
         const cardBookImage = createElement("img", {
-          class: "card-book-image"
+          class: "home-page__card-book-image"
         });
 
         const cardBookTitle = createElement("span", {
-          class: "card-book-title"
+          class: "home-page__card-book-title"
         });
 
         let bookTitle = item.volumeInfo.title;
@@ -324,10 +324,10 @@ async function renderBooks(bookName) {
           navigateToBookPage(item.id);
         });
 
-        const result = document.querySelector(".result");
-        result.appendChild(card);
+        const cards = document.querySelector(".home-page__cards");
+        cards.appendChild(card);
       } else {
-        result.innerHTML =
+        cards.innerHTML =
           "Unfortunately Server is not ready, Please refresh the page and try again";
       }
     });
@@ -338,8 +338,8 @@ async function renderBooks(bookName) {
 
 // check whether the search bar is empty or not
 const checkForWarning = () => {
-  const warning = document.querySelector(".warning");
-  const searchBar = document.querySelector(".search-bar");
+  const warning = document.querySelector(".home-page__warning");
+  const searchBar = document.querySelector(".home-page__search-bar");
 
   if (searchWord) {
     warning.style.opacity = "0";
@@ -358,7 +358,7 @@ window.onscroll = () => {
 };
 
 const scrollHandler = () => {
-  const logo = document.querySelector(".amir-books-logo");
+  const logo = document.querySelector(".nav-bar__amir-books-logo");
   const nav = document.querySelector("nav");
   if (document.body.scrollTop > 70 || document.documentElement.scrollTop > 70) {
     logo.style.width = "150px";

@@ -12,23 +12,25 @@ let cachedBook;
 
 // Rendering book page according to what user selects
 const bookPageTemplate = book => {
-  const bookPageWrapper = createElement("div", { class: "book-page-wrapper" });
+  const bookPageWrapper = createElement("div", { class: "book-page__wrapper" });
 
-  const bookWrapper = createElement("div", { class: "book-wrapper" });
+  const bookWrapper = createElement("div", {
+    class: "book-page__book-wrapper"
+  });
 
   const bookInfoWrapper = createElement("div", {
-    class: "book-info-wrapper"
+    class: "book-page__info-wrapper"
   });
   const bookInfoTitlesWrapper = createElement("div", {
-    class: "book-info-titles-wrapper"
+    class: "book-page__info-titles-wrapper"
   });
 
   const bookInfoItemsWrapper = createElement("div", {
-    class: "book-info-items-wrapper"
+    class: "book-page__info-items-wrapper"
   });
 
   const bookImageWrapper = createElement("div", {
-    class: "book-image-wrapper"
+    class: "book-page__image-wrapper"
   });
 
   const bookImage = createElement("img", {
@@ -41,7 +43,7 @@ const bookPageTemplate = book => {
   // create info titles according to info avalibility of the book
   const bookPageCreateTitles = title => {
     const bookInfoItemtitle = createElement("div", {
-      class: "book-info-title"
+      class: "book-page__info-title"
     });
 
     bookInfoItemtitle.innerHTML =
@@ -54,7 +56,9 @@ const bookPageTemplate = book => {
     if (bookInfoTitles.includes(bookInfoItemKey)) {
       bookPageCreateTitles(bookInfoItemKey);
       if (!Array.isArray(book.volumeInfo[bookInfoItemKey])) {
-        let bookCurrentItem = createElement("p", { class: "book-info-item" });
+        let bookCurrentItem = createElement("p", {
+          class: "book-page__info-item"
+        });
 
         bookCurrentItem.innerHTML =
           book.volumeInfo[bookInfoItemKey].toString().length <= 80
@@ -63,9 +67,8 @@ const bookPageTemplate = book => {
         bookInfoItemsWrapper.appendChild(bookCurrentItem);
       } else {
         let bookCurrentItemsWrapper = createElement("p", {
-          class: "book-info-item"
+          class: "book-page__info-item"
         });
-        bookCurrentItemsWrapper.className = "book-info-item";
         book.volumeInfo[bookInfoItemKey].forEach(item => {
           let bookCurrentItem = `${item} `;
           bookCurrentItemsWrapper.innerHTML += bookCurrentItem;
@@ -82,26 +85,26 @@ const bookPageTemplate = book => {
   });
   let isAdded = cart.find(item => item.id === book.id);
   const bookPageAddOrRemoveWrapper = createElement("div", {
-    class: "book-page-add-or-remove-wrapper"
+    class: "book-page__add-or-remove-wrapper"
   });
 
   const bookPageAddOrRemove = document.createElement("span");
   bookPageAddOrRemove.className = isAdded
-    ? "fas fa-trash-alt book-page-remove"
-    : "fa fa-cart-plus book-page-add";
+    ? "fas fa-trash-alt book-page__remove"
+    : "fa fa-cart-plus book-page__add";
 
   bookPageAddOrRemove.addEventListener("click", () => {
-    const cartAmount = document.querySelector(".cart-amount");
+    const cartAmount = document.querySelector(".nav-bar__cart-amount");
     if (!isAdded) {
       const bookPrice = book.saleInfo.listPrice
         ? book.saleInfo.listPrice.amount
         : Math.round(Math.random() * 20) + 5;
       addToCart(book, bookPrice);
-      bookPageAddOrRemove.className = "fas fa-trash-alt book-page-remove";
+      bookPageAddOrRemove.className = "fas fa-trash-alt book-page__remove";
       cartAmount.innerHTML = cart.length;
     } else {
       cart = cart.filter(cartItem => cartItem.id !== book.id);
-      bookPageAddOrRemove.className = "fa fa-cart-plus book-page-add";
+      bookPageAddOrRemove.className = "fa fa-cart-plus book-page__add";
       cartAmount.innerHTML = cart.length;
       cart.find(item => item.id === book.id);
     }
@@ -151,7 +154,7 @@ const renderBook = async bookId => {
     window.history.pushState({}, null, `/`);
     renderHome();
     renderBooks(searchWord);
-    const searchBar = document.querySelector(".search-bar");
+    const searchBar = document.querySelector(".home-page__search-bar");
     searchBar.value = searchWord;
   });
   mainWrapper.appendChild(backToLastSearchButton);

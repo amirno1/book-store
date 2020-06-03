@@ -1,0 +1,53 @@
+@import "./variables";
+.book-page {
+  &__wrapper {
+    text-align: left;
+    background-color: $backgroundGray;
+    color: $textWhite;
+    padding: 40px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+  }
+  &__add-or-remove-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    text-align: center;
+  }
+  &__add {
+    background-color: $lightGreen;
+    border-radius: 5px;
+    width: 150px;
+    padding: 5px 0;
+    cursor: pointer;
+  }
+  &__remove {
+    background-color: $pinkRed;
+    border-radius: 5px;
+    width: 150px;
+    padding: 5px 0;
+    cursor: pointer;
+  }
+  &__book-wrapper {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  &__info-wrapper {
+    display: flex;
+  }
+  &__image-wrapper img {
+    width: 150px;
+    max-height: 170px;
+    border-radius: 3px;
+  }
+  &__info-title,
+  &__info-item {
+    padding-bottom: 10px;
+  }
+  &__info-titles-wrapper {
+    margin-right: 20px;
+  }
+  &__info-items-wrapper {
+    margin-right: 20px;
+  }
+}

@@ -1,6 +1,6 @@
 const renderPayment = () => {
   mainWrapper.innerHTML =
-    '<h1 class="payment-response">Checkout and payment</h1>';
+    '<h1 class="payment-page__response">Checkout and payment</h1>';
   paymentHandler();
 };
 const paymentHandler = () => {
@@ -71,7 +71,7 @@ const paymentHandler = () => {
 
   const handlePaymentDenied = () => {
     mainWrapper.innerHTML = `
-      <div class="payment-response payment-denied">
+      <div class="payment-page__response payment-page__denied">
       <h1>Payment denied <i class="fas fa-ban"></i></h1>
       <h4>You are being redirected to your cart...</h4>
       <div class="loader"></div>
@@ -84,7 +84,7 @@ const paymentHandler = () => {
   };
   const handlePaymentSuccess = () => {
     mainWrapper.innerHTML = `
-      <div class="payment-response payment-successful">
+      <div class="payment-page__response payment-page__successful">
       <h1>Payment Successful <i class="fas fa-check-circle"></i></h1>
       <h4>You are being redirected to the homepage...</h3>
       <div class="loader"></div>
@@ -94,7 +94,7 @@ const paymentHandler = () => {
       window.history.pushState({}, null, "/");
       cart = [];
       searchWord = "";
-      cartAmount = document.querySelector(".cart-amount").innerHTML =
+      cartAmount = document.querySelector(".nav-bar__cart-amount").innerHTML =
         cart.length;
       renderHome();
     }, 2000);
