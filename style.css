@@ -88,7 +88,7 @@
 }
 
 .home-page__search-bar {
-  width: 500px;
+  width: 80%;
   height: 40px;
   border-radius: 5px;
   border: none;
@@ -97,6 +97,12 @@
   font-size: 20px;
   text-align: center;
   margin-bottom: 30px;
+}
+
+@media only screen and (max-width: 600px) {
+  .home-page__search-bar {
+    font-size: 14px;
+  }
 }
 
 .home-page__warning {
@@ -144,7 +150,7 @@
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
   margin: 40px auto;
-  width: 800px;
+  width: 80%;
 }
 
 .home-page__card {
@@ -178,6 +184,13 @@
 .home-page__card:hover .home-page__card-book-image {
   filter: blur(1px);
   -webkit-filter: blur(1px);
+}
+
+@media only screen and (max-width: 600px) {
+  .home-page__card {
+    width: 100%;
+    margin: 0 0 20px 0;
+  }
 }
 
 .home-page__card-book-image {
@@ -452,7 +465,7 @@
       -ms-flex-align: center;
           align-items: center;
   position: fixed;
-  width: 100%;
+  width: 100vw;
   top: 0;
   z-index: 5;
   padding: 10px;
@@ -470,13 +483,12 @@
 
 @media only screen and (max-width: 600px) {
   .nav-bar__amir-books-logo {
-    width: 180px;
+    width: 160px;
   }
 }
 
 .nav-bar__shopping-cart {
-  position: absolute;
-  right: 5%;
+  margin-right: 30px;
   font-size: 25px;
   background-color: #c3063f;
   color: #fff;
@@ -494,6 +506,12 @@
 .nav-bar__shopping-cart:active {
   -webkit-transform: translateY(4px);
           transform: translateY(4px);
+}
+
+@media only screen and (max-width: 600px) {
+  .nav-bar__shopping-cart {
+    font-size: 16px;
+  }
 }
 
 .nav-bar__cart-amount {

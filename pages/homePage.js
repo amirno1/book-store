@@ -359,11 +359,14 @@ window.onscroll = () => {
 };
 
 const scrollHandler = () => {
-  console.log(logoCurrentWidth);
   const logo = document.querySelector(".nav-bar__amir-books-logo");
   const nav = document.querySelector("nav");
   if (document.body.scrollTop > 70 || document.documentElement.scrollTop > 70) {
-    logo.style.width = "150px";
+    if (logoCurrentWidth < 300) {
+      logo.style.width = "120px";
+    } else {
+      logo.style.width = "150px";
+    }
     nav.style.backgroundColor = "#18181d";
   } else {
     logo.style.width = logoCurrentWidth.toString() + "px";

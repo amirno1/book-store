@@ -2,7 +2,7 @@
 @import "./mediaQueries";
 .home-page {
   &__search-bar {
-    width: 500px;
+    width: 80%;
     height: 40px;
     border-radius: 5px;
     border: none;
@@ -10,6 +10,9 @@
     font-size: 20px;
     text-align: center;
     margin-bottom: 30px;
+    @include responsive(phone) {
+      font-size: 14px;
+    }
   }
   &__warning {
     color: $pinkRed;
@@ -45,7 +48,7 @@
     display: flex;
     flex-wrap: wrap;
     margin: 40px auto;
-    width: 800px;
+    width: 80%;
   }
   &__card {
     position: relative;
@@ -70,6 +73,10 @@
     &:hover .home-page__card-book-image {
       filter: blur(1px);
       -webkit-filter: blur(1px);
+    }
+    @include responsive(phone) {
+      width: 100%;
+      margin: 0 0 20px 0;
     }
   }
   &__card-book-image {
