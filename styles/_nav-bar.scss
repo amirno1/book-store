@@ -1,4 +1,6 @@
 @import "./variables";
+@import "./mediaQueries";
+
 .nav-bar {
   font-family: Arial, Helvetica, sans-serif;
   display: flex;
@@ -16,9 +18,12 @@
     width: 300px;
     border-radius: 10px;
     transition: 0.5s;
+    @include responsive(phone) {
+      width: 180px;
+    }
   }
   &__shopping-cart {
-    position: fixed;
+    position: absolute;
     right: 5%;
     font-size: 25px;
     background-color: $pinkRed;

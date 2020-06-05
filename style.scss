@@ -16,6 +16,9 @@ body {
 }
 .main-wrapper {
   width: 960px;
+  @include responsive(phone) {
+    width: 300px;
+  }
   margin: 250px auto;
   text-align: center;
 }
