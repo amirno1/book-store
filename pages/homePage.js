@@ -25,7 +25,9 @@ navLogo.addEventListener("click", () => {
 
 // creating home page template
 const homePageTemplate = () => `
+    <img class="home-page__image" src="./images/3.jpeg" alt="books" />
     <div class="home-page__search-wrapper">
+    <div class="home-page__warning">Please type a book name</div>
       <div class="home-page__cart-box"></div>
       <input
         class="home-page__search-bar"
@@ -33,7 +35,6 @@ const homePageTemplate = () => `
         name="search-bar"
         id="search-bar"
       />
-      <span class="home-page__warning">Please type a book name here >></span>
       <button class="home-page__search-button">Search</button>
     </div>
     <div class="home-page__cards"></div>`;
@@ -344,11 +345,9 @@ const checkForWarning = () => {
 
   if (searchWord) {
     warning.style.opacity = "0";
-    warning.style.left = "1%";
     searchBar.style.border = "";
   } else {
     warning.style.opacity = "1";
-    warning.style.left = "9%";
     searchBar.style.border = "2px solid red";
   }
 };
