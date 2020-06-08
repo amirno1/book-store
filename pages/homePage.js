@@ -27,8 +27,8 @@ navLogo.addEventListener("click", () => {
 const homePageTemplate = () => `
     <img class="home-page__image" src="./images/3.jpeg" alt="books" />
     <div class="home-page__search-wrapper">
+    <div class="home-page__cart-box"></div>
     <div class="home-page__warning">Please type a book name</div>
-      <div class="home-page__cart-box"></div>
       <input
         class="home-page__search-bar"
         type="text"
@@ -194,6 +194,15 @@ function renderHome() {
     searchBar.value = searchWord;
   }
 
+  const readyToRender = () => {
+    const noItemElement = document.querySelector(".home-page__no-item");
+    if (noItemElement) {
+      noItemElement.parentNode.removeChild(noItemElement);
+    }
+    cards.innerHTML = "";
+    cachedBooks = null;
+  };
+
   searchBar.addEventListener("keyup", () => {
     searchWord = searchBar.value;
     checkForWarning();
@@ -204,8 +213,7 @@ function renderHome() {
 
   searchBar.addEventListener("keypress", e => {
     if (e.key === "Enter") {
-      cards.innerHTML = "";
-      cachedBooks = null;
+      readyToRender();
       renderBooks(searchWord);
     }
     if (searchWord.length === 0) {
@@ -214,8 +222,7 @@ function renderHome() {
   });
 
   searchButton.addEventListener("click", () => {
-    cards.innerHTML = "";
-    cachedBooks = null;
+    readyToRender();
     renderBooks(searchWord);
   });
 }
@@ -249,96 +256,106 @@ const appendChildren = (element, children) => {
 async function renderBooks(bookName) {
   if (searchWord) {
     const data = await fetchBooks(bookName);
-    data.items.forEach(item => {
-      if (item) {
-        let isAdded = cart.find(book => book.id === item.id);
-        const itemPrice = item.saleInfo.listPrice
-          ? item.saleInfo.listPrice.amount
-          : Math.round(Math.random() * 20) + 5;
-        const card = createElement("div", { class: "home-page__card" });
-        const addOrRemoveButton = createElement("span", {
-          class: "home-page__add-remove-button",
-          "data-home-page__card-item-id": `${item.id}`
-        });
 
-        if (isAdded) {
-          addOrRemoveButton.style.backgroundColor = "#c3063f";
-        }
+    if (data.totalItems) {
+      data.items.forEach(item => {
+        if (item) {
+          let isAdded = cart.find(book => book.id === item.id);
+          const itemPrice = item.saleInfo.listPrice
+            ? item.saleInfo.listPrice.amount
+            : Math.round(Math.random() * 20) + 5;
+          const card = createElement("div", { class: "home-page__card" });
+          const addOrRemoveButton = createElement("span", {
+            class: "home-page__add-remove-button",
+            "data-home-page__card-item-id": `${item.id}`
+          });
 
-        addOrRemoveButton.innerHTML = isAdded
-          ? `<ion-icon class="trash-icon"name="trash-outline"></ion-icon>`
-          : `€ ${itemPrice}`;
-        addOrRemoveButton.addEventListener("mouseenter", () => {
-          isAdded = cart.find(book => book.id === item.id);
-          if (!isAdded) {
-            addOrRemoveButton.innerHTML += `<span class="fa fa-cart-plus"></span>`;
-          }
-        });
-        addOrRemoveButton.addEventListener("mouseleave", () => {
-          isAdded = cart.find(book => book.id === item.id);
-          if (!isAdded) {
-            addOrRemoveButton.innerHTML = `€ ${itemPrice}`;
-          }
-        });
-        addOrRemoveButton.addEventListener("click", e => {
-          e.stopPropagation();
-          const cartAmount = document.querySelector(".nav-bar__cart-amount");
-          const cartBox = document.querySelector(".home-page__cart-box");
-          isAdded = cart.find(book => book.id === item.id);
           if (isAdded) {
-            addOrRemoveButton.style.backgroundColor = "#6c9a36";
-            removeFromCart(item);
-            addOrRemoveButton.innerHTML = `€ ${itemPrice} <span class="fa fa-cart-plus"></span>`;
-          } else {
-            cartBox.style.opacity = "1";
-            addOrRemoveButton.style.backgroundColor = !isAdded
-              ? "#c3063f"
-              : "#6c9a36";
-            addToCart(item, itemPrice);
-            addOrRemoveButton.innerHTML = `<ion-icon class= "trash-icon" name="trash-outline"></ion-icon>`;
+            addOrRemoveButton.style.backgroundColor = "#c3063f";
           }
-          cartAmount.innerHTML = cart.length;
-          if (cart.length === 0) {
-            cartBox.style.opacity = "0";
-          }
-        });
 
-        card.appendChild(addOrRemoveButton);
+          addOrRemoveButton.innerHTML = isAdded
+            ? `<ion-icon class="trash-icon"name="trash-outline"></ion-icon>`
+            : `€ ${itemPrice}`;
+          addOrRemoveButton.addEventListener("mouseenter", () => {
+            isAdded = cart.find(book => book.id === item.id);
+            if (!isAdded) {
+              addOrRemoveButton.innerHTML += `<span class="fa fa-cart-plus"></span>`;
+            }
+          });
+          addOrRemoveButton.addEventListener("mouseleave", () => {
+            isAdded = cart.find(book => book.id === item.id);
+            if (!isAdded) {
+              addOrRemoveButton.innerHTML = `€ ${itemPrice}`;
+            }
+          });
+          addOrRemoveButton.addEventListener("click", e => {
+            e.stopPropagation();
+            const cartAmount = document.querySelector(".nav-bar__cart-amount");
+            const cartBox = document.querySelector(".home-page__cart-box");
+            isAdded = cart.find(book => book.id === item.id);
+            if (isAdded) {
+              addOrRemoveButton.style.backgroundColor = "#6c9a36";
+              removeFromCart(item);
+              addOrRemoveButton.innerHTML = `€ ${itemPrice} <span class="fa fa-cart-plus"></span>`;
+            } else {
+              cartBox.style.opacity = "1";
+              addOrRemoveButton.style.backgroundColor = !isAdded
+                ? "#c3063f"
+                : "#6c9a36";
+              addToCart(item, itemPrice);
+              addOrRemoveButton.innerHTML = `<ion-icon class= "trash-icon" name="trash-outline"></ion-icon>`;
+            }
+            cartAmount.innerHTML = cart.length;
+            if (cart.length === 0) {
+              cartBox.style.opacity = "0";
+            }
+          });
 
-        const cardBookImage = createElement("img", {
-          class: "home-page__card-book-image"
-        });
+          card.appendChild(addOrRemoveButton);
 
-        const cardBookTitle = createElement("span", {
-          class: "home-page__card-book-title"
-        });
+          const cardBookImage = createElement("img", {
+            class: "home-page__card-book-image"
+          });
 
-        let bookTitle = item.volumeInfo.title;
+          const cardBookTitle = createElement("span", {
+            class: "home-page__card-book-title"
+          });
 
-        cardBookTitle.innerHTML =
-          bookTitle.length <= 25 ? bookTitle : bookTitle.slice(0, 25) + "...";
-        item.volumeInfo.imageLinks
-          ? (cardBookImage.src = `${item.volumeInfo.imageLinks.thumbnail}`)
-          : (cardBookImage.src = `https://www.ottofrei.com/sc-app/extensions/VintenCloud/OttoFreiSuiteCommerceTheme/18.2.0/img/no_image_available.jpeg`);
-        appendChildren(card, [cardBookTitle, cardBookImage]);
+          let bookTitle = item.volumeInfo.title;
 
-        card.addEventListener("click", () => {
-          navigateToBookPage(item.id);
-        });
+          cardBookTitle.innerHTML =
+            bookTitle.length <= 25 ? bookTitle : bookTitle.slice(0, 25) + "...";
+          item.volumeInfo.imageLinks
+            ? (cardBookImage.src = `${item.volumeInfo.imageLinks.thumbnail}`)
+            : (cardBookImage.src = `https://www.ottofrei.com/sc-app/extensions/VintenCloud/OttoFreiSuiteCommerceTheme/18.2.0/img/no_image_available.jpeg`);
+          appendChildren(card, [cardBookTitle, cardBookImage]);
 
-        const cards = document.querySelector(".home-page__cards");
-        cards.appendChild(card);
-      } else {
-        cards.innerHTML =
-          "Unfortunately Server is not ready, Please refresh the page and try again";
-      }
-    });
+          card.addEventListener("click", () => {
+            navigateToBookPage(item.id);
+          });
+
+          const cards = document.querySelector(".home-page__cards");
+          cards.appendChild(card);
+        } else {
+          cards.innerHTML =
+            "Unfortunately Server is not ready, Please refresh the page and try again";
+        }
+      });
+    } else {
+      const noItemElement = createElement("h3", {
+        class: "home-page__no-item"
+      });
+      noItemElement.innerHTML =
+        "We do not have a book with this title in our data base, please try something else";
+      mainWrapper.appendChild(noItemElement);
+    }
   } else {
     checkForWarning();
   }
 }
 
-// check whether the search bar is empty or not
+// check whether the search bar is empty
 const checkForWarning = () => {
   const warning = document.querySelector(".home-page__warning");
   const searchBar = document.querySelector(".home-page__search-bar");

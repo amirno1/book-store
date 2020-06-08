@@ -1,16 +1,21 @@
 @mixin responsive($breakpoint) {
   @if $breakpoint == phone {
-    @media only screen and (max-width: 600px) {
+    @media only screen and (max-width: 450px) {
+      @content;
+    }
+  }
+  @if $breakpoint == phone-land {
+    @media only screen and (min-width: 450px) {
       @content;
     }
   }
   @if $breakpoint == tab {
-    @media only screen and (min-width: 600px) {
+    @media only screen and (min-width: 650px) {
       @content;
     }
   }
   @if $breakpoint == lap-desk {
-    @media only screen and (min-width: 992px) {
+    @media only screen and (min-width: 900px) {
       @content;
     }
   }

@@ -7,7 +7,7 @@
   justify-content: space-between;
   align-items: center;
   position: fixed;
-  width: 100vw;
+  width: 100%;
   top: 0;
   z-index: 5;
   padding: 10px;
@@ -15,16 +15,15 @@
 
   &__amir-books-logo {
     cursor: pointer;
-    width: 300px;
     border-radius: 10px;
     transition: 0.5s;
-    @include responsive(phone) {
-      width: 160px;
+    width: 160px;
+    @include responsive(lap-desk) {
+      width: 300px;
     }
   }
   &__shopping-cart {
     margin-right: 30px;
-    font-size: 25px;
     background-color: $pinkRed;
     color: $textWhite;
     padding: 5px 20px;
@@ -39,6 +38,9 @@
     }
     @include responsive(phone) {
       font-size: 16px;
+    }
+    @include responsive(lap-desk) {
+      font-size: 25px;
     }
   }
   &__cart-amount {

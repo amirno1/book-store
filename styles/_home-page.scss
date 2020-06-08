@@ -2,18 +2,18 @@
 @import "./mediaQueries";
 .home-page {
   &__search-bar {
-    width: 55%;
     height: 40px;
     border-radius: 5px;
     border: none;
     box-shadow: 1px 1px 1px;
-    font-size: 20px;
     text-align: center;
+    font-size: 14px;
     margin-bottom: 30px;
     margin-top: 15px;
-    @include responsive(phone) {
-      font-size: 14px;
-      width: 70%;
+    width: 70%;
+    @include responsive(lap-desk) {
+      font-size: 20px;
+      width: 55%;
     }
   }
   &__image {
@@ -29,12 +29,12 @@
     position: relative;
     color: $pinkRed;
     opacity: 0;
-    width: 20%;
     margin: 0 auto;
     background-color: $textWhite;
     border-radius: 5px;
     padding: 5px;
     transition: all 0.5s;
+    font-size: 12px;
     &:after {
       position: absolute;
       width: 10px;
@@ -53,7 +53,13 @@
     }
     @include responsive(phone) {
       width: 50%;
-      font-size: 12px;
+    }
+    @include responsive(phone-land) {
+      width: 40%;
+    }
+    @include responsive(lap-desk) {
+      width: 30%;
+      font-size: 20px;
     }
   }
   &__search-button {
@@ -85,14 +91,10 @@
   &__card {
     position: relative;
     cursor: pointer;
-    margin: 0 20px 20px 0;
-    width: calc(100% / 4 - 15px);
+    margin: 0 0 20px 0;
     height: 200px;
     transition: all 0.4s;
     z-index: 2;
-    &:nth-child(4n + 0) {
-      margin: 0 0 20px 0;
-    }
     &:hover {
       transform: scale(1.05);
     }
@@ -108,7 +110,15 @@
     }
     @include responsive(phone) {
       width: 100%;
-      margin: 0 0 20px 0;
+    }
+    @include responsive(phone-land) {
+      width: (100%/2);
+    }
+    @include responsive(tab) {
+      width: (100%/3);
+    }
+    @include responsive(lap-desk) {
+      width: (100%/4);
     }
   }
   &__card-book-image {
@@ -135,17 +145,31 @@
     opacity: 0;
     text-align: left;
     font-size: 12px;
-    position: absolute;
+    position: relative;
+    margin: 20px auto;
     background-color: $backgroundGray;
     color: $textWhite;
-    width: 300px;
-    right: 2%;
-    top: 25%;
     padding: 10px;
     border-radius: 3px;
     max-height: 150px;
     overflow: scroll;
     transition: all 0.3s;
+    @include responsive(phone) {
+      width: 90%;
+    }
+    @include responsive(phone-land) {
+      width: 60%;
+    }
+    @include responsive(tab) {
+      width: 50%;
+    }
+    @include responsive(lap-desk) {
+      position: absolute;
+      right: 2%;
+      top: 25%;
+      margin: 20px auto;
+      width: 300px;
+    }
   }
 
   &__add-remove-button {
@@ -197,5 +221,12 @@
   &__cart-item-amount-plus {
     padding: 5px;
     cursor: pointer;
+  }
+  &__no-item {
+    width: 50%;
+    background-color: $pinkRed;
+    padding: 5px;
+    color: $textWhite;
+    margin: 0 auto;
   }
 }

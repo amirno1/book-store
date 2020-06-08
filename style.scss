@@ -13,12 +13,21 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 .main-wrapper {
-  width: 960px;
+  margin: 150px auto;
+  text-align: center;
   @include responsive(phone) {
     width: 300px;
   }
-  margin: 250px auto;
-  text-align: center;
+  @include responsive(phone-land) {
+    width: 450px;
+  }
+  @include responsive(tab) {
+    width: 650px;
+  }
+  @include responsive(lap-desk) {
+    width: 900px;
+    margin: 250px auto;
+  }
 }
 
 .back-to-last-search-button {
