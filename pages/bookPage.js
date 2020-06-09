@@ -61,9 +61,9 @@ const bookPageTemplate = book => {
         });
 
         bookCurrentItem.innerHTML =
-          book.volumeInfo[bookInfoItemKey].toString().length <= 60
+          book.volumeInfo[bookInfoItemKey].toString().length <= 35
             ? `${book.volumeInfo[bookInfoItemKey]}`
-            : `${book.volumeInfo[bookInfoItemKey].slice(0, 57)}...`;
+            : `${book.volumeInfo[bookInfoItemKey].slice(0, 32)}...`;
         bookInfoItemsWrapper.appendChild(bookCurrentItem);
       } else {
         let bookCurrentItemsWrapper = createElement("p", {
@@ -73,10 +73,10 @@ const bookPageTemplate = book => {
           let bookCurrentItem = `${item} `;
           bookCurrentItemsWrapper.innerHTML += bookCurrentItem;
         });
-        if (bookCurrentItemsWrapper.innerHTML.length >= 60) {
+        if (bookCurrentItemsWrapper.innerHTML.length >= 35) {
           bookCurrentItemsWrapper.innerHTML = `${bookCurrentItemsWrapper.innerHTML.slice(
             0,
-            57
+            32
           )}...`;
         }
         bookInfoItemsWrapper.appendChild(bookCurrentItemsWrapper);
@@ -115,7 +115,7 @@ const bookPageTemplate = book => {
     bookInfoTitlesWrapper,
     bookInfoItemsWrapper
   ]);
-  appendChildren(bookWrapper, [bookInfoWrapper, bookImageWrapper]);
+  appendChildren(bookWrapper, [bookImageWrapper, bookInfoWrapper]);
   bookPageWrapper.appendChild(bookWrapper);
   appendChildren(bookPageWrapper, [bookWrapper, bookPageAddOrRemoveWrapper]);
   return bookPageWrapper;

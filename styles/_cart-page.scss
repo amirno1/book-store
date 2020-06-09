@@ -12,27 +12,49 @@
     background-color: $backgroundGray;
     color: $textWhite;
     border-collapse: collapse;
-  }
-  &__table tr td {
-    padding: 10px;
-    min-width: 100px;
+    th {
+      padding: 20px 0;
+      background-color: $backgroundBlack;
+      color: $textWhite;
+    }
+    tr {
+      td {
+        padding: 10px;
+        min-width: 100px;
+        &:nth-child(1) {
+          text-align: left;
+        }
+        &:nth-child(n + 2) {
+          @include responsive(phone) {
+            min-width: 55px;
+          }
+          @include responsive(phone-land) {
+            min-width: 55px;
+          }
+        }
+        @include responsive(phone) {
+          padding: 10px 4px;
+        }
+        @include responsive(phone-land) {
+          padding: 10px 4px;
+        }
+      }
+    }
+    @include responsive(phone) {
+      font-size: 9px;
+    }
+    @include responsive(phone-land) {
+      font-size: 9px;
+    }
   }
   &__table-row {
     border-bottom: $textWhite solid 1px;
+    &:last-child {
+      border-bottom: none;
+    }
   }
-  &__table-row:last-child {
-    border-bottom: none;
-  }
-  &__table tr td:nth-child(1) {
-    text-align: left;
-  }
-  &__table th {
-    padding: 20px 0;
-    background-color: $backgroundBlack;
-    color: $textWhite;
-  }
+
   &__table-wrapper {
-    background-color: $textWhite;
     border-radius: 3px;
   }
   &__item-image {
@@ -54,6 +76,12 @@
     color: $textWhite;
     background-color: $pinkRed;
     cursor: pointer;
+    @include responsive(phone) {
+      font-size: 9px;
+    }
+    @include responsive(phone-land) {
+      font-size: 9px;
+    }
   }
   &__no-item {
     padding: 50px;
@@ -70,6 +98,14 @@
     width: 150px;
     color: $textWhite;
     float: right;
+    @include responsive(phone) {
+      width: 100px;
+      font-size: 10px;
+    }
+    @include responsive(phone-land) {
+      width: 100px;
+      font-size: 10px;
+    }
   }
   &__go-to-payment {
     background-color: $pinkRed;
@@ -77,6 +113,12 @@
     font-size: 12px;
     border-radius: 5px;
     cursor: pointer;
+    @include responsive(phone) {
+      font-size: 10px;
+    }
+    @include responsive(phone-land) {
+      font-size: 10px;
+    }
   }
 
   &__payment-modal {

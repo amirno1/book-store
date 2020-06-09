@@ -94,9 +94,6 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
   margin-bottom: 20px;
 }
 
@@ -142,14 +139,32 @@
 }
 
 @media only screen and (max-width: 450px) {
+  .book-page__info-wrapper {
+    margin: 10px auto;
+  }
+}
+
+@media only screen and (max-width: 450px) {
   .book-page__image-wrapper {
-    text-align: center;
+    margin: 0 auto;
   }
 }
 
 @media only screen and (min-width: 450px) {
   .book-page__image-wrapper {
-    text-align: center;
+    margin: 0 auto;
+  }
+}
+
+@media only screen and (min-width: 650px) {
+  .book-page__image-wrapper {
+    margin: 0 40px 0 0;
+  }
+}
+
+@media only screen and (min-width: 900px) {
+  .book-page__image-wrapper {
+    margin: 0 80px 0 0;
   }
 }
 
@@ -163,18 +178,46 @@
   padding-bottom: 10px;
 }
 
-@media only screen and (max-width: 450px) {
-  .book-page__info-title:nth-child(n + 3), .book-page__info-item:nth-child(n + 3) {
-    display: none;
-  }
-}
-
 .book-page__info-titles-wrapper {
   margin-right: 20px;
 }
 
-.book-page__info-items-wrapper {
-  margin-right: 20px;
+@media only screen and (max-width: 450px) {
+  .book-page__info-titles-wrapper {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 450px) {
+  .book-page__info-titles-wrapper {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 650px) {
+  .book-page__info-titles-wrapper {
+    display: block;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .book-page__info-items-wrapper {
+    text-align: center;
+  }
+}
+
+@media only screen and (min-width: 450px) {
+  .book-page__info-items-wrapper {
+    text-align: center;
+    margin: 10px auto;
+  }
+}
+
+@media only screen and (min-width: 650px) {
+  .book-page__info-items-wrapper {
+    text-align: left;
+    margin: 0;
+  }
 }
 
 .payment-page__response {
@@ -518,9 +561,55 @@
   border-collapse: collapse;
 }
 
+.cart-page__table th {
+  padding: 20px 0;
+  background-color: #19191c;
+  color: #fff;
+}
+
 .cart-page__table tr td {
   padding: 10px;
   min-width: 100px;
+}
+
+.cart-page__table tr td:nth-child(1) {
+  text-align: left;
+}
+
+@media only screen and (max-width: 450px) {
+  .cart-page__table tr td:nth-child(n + 2) {
+    min-width: 55px;
+  }
+}
+
+@media only screen and (min-width: 450px) {
+  .cart-page__table tr td:nth-child(n + 2) {
+    min-width: 55px;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .cart-page__table tr td {
+    padding: 10px 4px;
+  }
+}
+
+@media only screen and (min-width: 450px) {
+  .cart-page__table tr td {
+    padding: 10px 4px;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .cart-page__table {
+    font-size: 9px;
+  }
+}
+
+@media only screen and (min-width: 450px) {
+  .cart-page__table {
+    font-size: 9px;
+  }
 }
 
 .cart-page__table-row {
@@ -531,18 +620,7 @@
   border-bottom: none;
 }
 
-.cart-page__table tr td:nth-child(1) {
-  text-align: left;
-}
-
-.cart-page__table th {
-  padding: 20px 0;
-  background-color: #19191c;
-  color: #fff;
-}
-
 .cart-page__table-wrapper {
-  background-color: #fff;
   border-radius: 3px;
 }
 
@@ -572,6 +650,18 @@
   cursor: pointer;
 }
 
+@media only screen and (max-width: 450px) {
+  .cart-page__item-remove {
+    font-size: 9px;
+  }
+}
+
+@media only screen and (min-width: 450px) {
+  .cart-page__item-remove {
+    font-size: 9px;
+  }
+}
+
 .cart-page__no-item {
   padding: 50px;
   background-color: #4e4e50;
@@ -591,12 +681,38 @@
   float: right;
 }
 
+@media only screen and (max-width: 450px) {
+  .cart-page__price-and-payment {
+    width: 100px;
+    font-size: 10px;
+  }
+}
+
+@media only screen and (min-width: 450px) {
+  .cart-page__price-and-payment {
+    width: 100px;
+    font-size: 10px;
+  }
+}
+
 .cart-page__go-to-payment {
   background-color: #c3063f;
   padding: 5px;
   font-size: 12px;
   border-radius: 5px;
   cursor: pointer;
+}
+
+@media only screen and (max-width: 450px) {
+  .cart-page__go-to-payment {
+    font-size: 10px;
+  }
+}
+
+@media only screen and (min-width: 450px) {
+  .cart-page__go-to-payment {
+    font-size: 10px;
+  }
 }
 
 .cart-page__payment-modal {
@@ -743,24 +859,7 @@ body {
 .main-wrapper {
   margin: 150px auto;
   text-align: center;
-}
-
-@media only screen and (max-width: 450px) {
-  .main-wrapper {
-    width: 300px;
-  }
-}
-
-@media only screen and (min-width: 450px) {
-  .main-wrapper {
-    width: 450px;
-  }
-}
-
-@media only screen and (min-width: 650px) {
-  .main-wrapper {
-    width: 650px;
-  }
+  width: 95%;
 }
 
 @media only screen and (min-width: 900px) {

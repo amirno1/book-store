@@ -59,7 +59,6 @@
   }
   &__book-wrapper {
     display: flex;
-    justify-content: space-between;
     margin-bottom: 20px;
     @include responsive(phone) {
       font-size: 12px;
@@ -78,13 +77,22 @@
   }
   &__info-wrapper {
     display: flex;
+    @include responsive(phone) {
+      margin: 10px auto;
+    }
   }
   &__image-wrapper {
     @include responsive(phone) {
-      text-align: center;
+      margin: 0 auto;
     }
     @include responsive(phone-land) {
-      text-align: center;
+      margin: 0 auto;
+    }
+    @include responsive(tab) {
+      margin: 0 40px 0 0;
+    }
+    @include responsive(lap-desk) {
+      margin: 0 80px 0 0;
     }
     img {
       width: 150px;
@@ -95,16 +103,30 @@
   &__info-title,
   &__info-item {
     padding-bottom: 10px;
-    @include responsive(phone) {
-      &:nth-child(n + 3) {
-        display: none;
-      }
-    }
   }
   &__info-titles-wrapper {
     margin-right: 20px;
+    @include responsive(phone) {
+      display: none;
+    }
+    @include responsive(phone-land) {
+      display: none;
+    }
+    @include responsive(tab) {
+      display: block;
+    }
   }
   &__info-items-wrapper {
-    margin-right: 20px;
+    @include responsive(phone) {
+      text-align: center;
+    }
+    @include responsive(phone-land) {
+      text-align: center;
+      margin: 10px auto;
+    }
+    @include responsive(tab) {
+      text-align: left;
+      margin: 0;
+    }
   }
 }

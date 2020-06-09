@@ -17,15 +17,7 @@ body {
 .main-wrapper {
   margin: 150px auto;
   text-align: center;
-  @include responsive(phone) {
-    width: 300px;
-  }
-  @include responsive(phone-land) {
-    width: 450px;
-  }
-  @include responsive(tab) {
-    width: 650px;
-  }
+  width: 95%;
   @include responsive(lap-desk) {
     width: 900px;
     margin: 250px auto;
