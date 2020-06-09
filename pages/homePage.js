@@ -25,7 +25,6 @@ navLogo.addEventListener("click", () => {
 
 // creating home page template
 const homePageTemplate = () => `
-    <img class="home-page__image" src="./images/3.jpeg" alt="books" />
     <div class="home-page__search-wrapper">
     <div class="home-page__cart-box"></div>
     <div class="home-page__warning">Please type a book name</div>

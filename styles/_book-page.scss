@@ -9,18 +9,46 @@
     padding: 40px;
     margin-bottom: 20px;
     border-radius: 10px;
+    @include responsive(phone) {
+      padding: 20px;
+    }
+    @include responsive(phone-land) {
+      padding: 20px;
+    }
+    @include responsive(tab) {
+      padding: 40px;
+    }
   }
   &__add-or-remove-wrapper {
     display: flex;
     justify-content: flex-end;
     text-align: center;
+    @include responsive(phone) {
+      display: block;
+    }
+    @include responsive(phone-land) {
+      display: block;
+    }
+    @include responsive(tab) {
+      display: flex;
+    }
   }
   &__add {
     background-color: $lightGreen;
     border-radius: 5px;
     width: 150px;
     padding: 5px 0;
+    margin-left: 10px;
     cursor: pointer;
+    @include responsive(phone) {
+      margin: 0;
+    }
+    @include responsive(phone-land) {
+      margin: 0;
+    }
+    @include responsive(tab) {
+      margin-left: 10px;
+    }
   }
   &__remove {
     background-color: $pinkRed;
@@ -33,18 +61,45 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
+    @include responsive(phone) {
+      font-size: 12px;
+      flex-direction: column;
+    }
+    @include responsive(phone-land) {
+      font-size: 13px;
+      flex-direction: column;
+    }
+    @include responsive(tab) {
+      flex-direction: row;
+    }
+    @include responsive(lap-desk) {
+      font-size: 16px;
+    }
   }
   &__info-wrapper {
     display: flex;
   }
-  &__image-wrapper img {
-    width: 150px;
-    max-height: 170px;
-    border-radius: 3px;
+  &__image-wrapper {
+    @include responsive(phone) {
+      text-align: center;
+    }
+    @include responsive(phone-land) {
+      text-align: center;
+    }
+    img {
+      width: 150px;
+      max-height: 170px;
+      border-radius: 3px;
+    }
   }
   &__info-title,
   &__info-item {
     padding-bottom: 10px;
+    @include responsive(phone) {
+      &:nth-child(n + 3) {
+        display: none;
+      }
+    }
   }
   &__info-titles-wrapper {
     margin-right: 20px;
