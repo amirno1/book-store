@@ -44,7 +44,7 @@ const renderCart = () => {
     const cartPageTableWrapper = document.querySelector(
       ".cart-page__table-wrapper"
     );
-    cartPageTableWrapper.innerHTML += `<h1 class="cart-page__no-item">There are no items in your shopping cart</h1>`;
+    cartPageTableWrapper.innerHTML += `<div class="cart-page__no-item-wrapper"><h2 class="cart-page__no-item">There are no items in your shopping cart</h2></div>`;
   } else {
   }
   const cartTable = document.querySelector(".cart-page__table");

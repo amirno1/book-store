@@ -3,25 +3,28 @@
   background-color: #4e4e50;
   color: #fff;
   padding: 40px;
-  margin-bottom: 20px;
+  margin: 0 auto 20px auto;
   border-radius: 10px;
 }
 
 @media only screen and (max-width: 450px) {
   .book-page__wrapper {
     padding: 20px;
+    width: 60%;
   }
 }
 
 @media only screen and (min-width: 450px) {
   .book-page__wrapper {
     padding: 20px;
+    width: 50%;
   }
 }
 
 @media only screen and (min-width: 650px) {
   .book-page__wrapper {
     padding: 40px;
+    width: 80%;
   }
 }
 
@@ -555,7 +558,8 @@
 }
 
 .cart-page__table {
-  width: 100%;
+  width: 95%;
+  margin: 0 auto;
   background-color: #4e4e50;
   color: #fff;
   border-collapse: collapse;
@@ -608,7 +612,19 @@
 
 @media only screen and (min-width: 450px) {
   .cart-page__table {
-    font-size: 9px;
+    font-size: 11px;
+  }
+}
+
+@media only screen and (min-width: 650px) {
+  .cart-page__table {
+    font-size: 16px;
+  }
+}
+
+@media only screen and (min-width: 900px) {
+  .cart-page__table {
+    width: 100%;
   }
 }
 
@@ -662,6 +678,17 @@
   }
 }
 
+.cart-page__no-item-wrapper {
+  width: 95%;
+  margin: 0 auto;
+}
+
+@media only screen and (min-width: 900px) {
+  .cart-page__no-item-wrapper {
+    width: 100%;
+  }
+}
+
 .cart-page__no-item {
   padding: 50px;
   background-color: #4e4e50;
@@ -676,9 +703,8 @@
 }
 
 .cart-page__price-and-payment {
-  width: 150px;
+  margin: 0 auto;
   color: #fff;
-  float: right;
 }
 
 @media only screen and (max-width: 450px) {
@@ -692,6 +718,19 @@
   .cart-page__price-and-payment {
     width: 100px;
     font-size: 10px;
+  }
+}
+
+@media only screen and (min-width: 650px) {
+  .cart-page__price-and-payment {
+    width: 150px;
+    font-size: 16px;
+  }
+}
+
+@media only screen and (min-width: 900px) {
+  .cart-page__price-and-payment {
+    float: right;
   }
 }
 
@@ -712,6 +751,12 @@
 @media only screen and (min-width: 450px) {
   .cart-page__go-to-payment {
     font-size: 10px;
+  }
+}
+
+@media only screen and (min-width: 650px) {
+  .cart-page__go-to-payment {
+    font-size: 16px;
   }
 }
 
@@ -748,6 +793,24 @@
   cursor: pointer;
   font-size: 14px;
   margin-right: 10px;
+}
+
+@media only screen and (max-width: 450px) {
+  .cart-page__modal-button {
+    margin: 10px 0;
+  }
+}
+
+@media only screen and (min-width: 450px) {
+  .cart-page__modal-button {
+    margin: 10px 0;
+  }
+}
+
+@media only screen and (min-width: 650px) {
+  .cart-page__modal-button {
+    margin: 0 10px 0 0;
+  }
 }
 
 .cart-page__modal-button:hover {
@@ -859,7 +922,7 @@ body {
 .main-wrapper {
   margin: 150px auto;
   text-align: center;
-  width: 95%;
+  width: 100%;
 }
 
 @media only screen and (min-width: 900px) {

@@ -7,16 +7,19 @@
     background-color: $backgroundGray;
     color: $textWhite;
     padding: 40px;
-    margin-bottom: 20px;
+    margin: 0 auto 20px auto;
     border-radius: 10px;
     @include responsive(phone) {
       padding: 20px;
+      width: 60%;
     }
     @include responsive(phone-land) {
       padding: 20px;
+      width: 50%;
     }
     @include responsive(tab) {
       padding: 40px;
+      width: 80%;
     }
   }
   &__add-or-remove-wrapper {
@@ -60,6 +63,7 @@
   &__book-wrapper {
     display: flex;
     margin-bottom: 20px;
+
     @include responsive(phone) {
       font-size: 12px;
       flex-direction: column;
