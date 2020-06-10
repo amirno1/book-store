@@ -227,8 +227,14 @@
   padding: 20px;
   border-radius: 5px;
   color: #fff;
-  width: 700px;
+  width: 65%;
   margin: 0 auto;
+}
+
+@media only screen and (max-width: 450px) {
+  .payment-page__response {
+    width: 55%;
+  }
 }
 
 .payment-page__response h1 {
@@ -497,6 +503,10 @@
 
 .home-page__add-remove-button:hover {
   padding: 5px 15px;
+}
+
+.home-page__cart-add {
+  margin-left: 10px;
 }
 
 .home-page__cart-item {
@@ -916,7 +926,14 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
+  background: url("./images/3.jpeg") fixed no-repeat center;
   background-size: cover;
+}
+
+@media only screen and (max-width: 450px) {
+  body {
+    background-size: auto;
+  }
 }
 
 .main-wrapper {

@@ -1,9 +1,9 @@
-@import "./styles/_book-page.scss";
-@import "./styles/_payment-page.scss";
-@import "./styles/_home-page.scss";
-@import "./styles/_cart-page.scss";
-@import "./styles/_nav-bar.scss";
-@import "./styles/variables";
+@import "./styles/book-page.scss";
+@import "./styles/payment-page.scss";
+@import "./styles/home-page.scss";
+@import "./styles/cart-page.scss";
+@import "./styles/nav-bar.scss";
+
 * {
   padding: 0;
   margin: 0;
@@ -11,8 +11,11 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
-  // background: url("./images/3.jpeg") fixed no-repeat center;
+  background: url("./images/3.jpeg") fixed no-repeat center;
   background-size: cover;
+  @include responsive(phone) {
+    background-size: auto;
+  }
 }
 .main-wrapper {
   margin: 150px auto;

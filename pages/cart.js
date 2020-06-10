@@ -1,7 +1,7 @@
 const cartTemplate = `
 <div class="cart-page__payment-modal">
   <div class="cart-page__payment-modal-content">
-    <h2>There are no items in the shopping cart!!</h2>
+    <div class="cart-page__no-item-wrapper"><h2 class="cart-page__no-item">There are no items in your shopping cart</h2></div>
     <div class="cart-page__payment-modal-button-wrapper">
       <button class="cart-page__modal-button cart-page__continue-shopping-button">
         Continue shopping

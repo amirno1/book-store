@@ -1,6 +1,6 @@
 const renderPayment = () => {
   mainWrapper.innerHTML =
-    '<h1 class="payment-page__response">Checkout and payment</h1>';
+    '<div class="payment-page__response"><h1>Checkout and payment</h1></div>';
   paymentHandler();
 };
 const paymentHandler = () => {

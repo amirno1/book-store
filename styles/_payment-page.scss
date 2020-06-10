@@ -6,8 +6,11 @@
     padding: 20px;
     border-radius: 5px;
     color: $textWhite;
-    width: 700px;
+    width: 65%;
     margin: 0 auto;
+    @include responsive(phone) {
+      width: 55%;
+    }
   }
   &__response h1 {
     margin-bottom: 10px;

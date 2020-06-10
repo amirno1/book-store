@@ -163,7 +163,7 @@ const removeFromCart = item => {
       const cartPageTableWrapper = document.querySelector(
         ".cart-page__table-wrapper"
       );
-      cartPageTableWrapper.innerHTML += `<h1 class="cart-page__no-item">There is no item in your cart</h1>`;
+      cartPageTableWrapper.innerHTML += `<div class="cart-page__no-item-wrapper"><h2 class="cart-page__no-item">There are no items in your shopping cart</h2></div>`;
     }
   }
 };
@@ -279,7 +279,7 @@ async function renderBooks(bookName) {
           addOrRemoveButton.addEventListener("mouseenter", () => {
             isAdded = cart.find(book => book.id === item.id);
             if (!isAdded) {
-              addOrRemoveButton.innerHTML += `<span class="fa fa-cart-plus"></span>`;
+              addOrRemoveButton.innerHTML += `<span class="fa fa-cart-plus home-page__cart-add"></span>`;
             }
           });
           addOrRemoveButton.addEventListener("mouseleave", () => {
@@ -296,7 +296,7 @@ async function renderBooks(bookName) {
             if (isAdded) {
               addOrRemoveButton.style.backgroundColor = "#6c9a36";
               removeFromCart(item);
-              addOrRemoveButton.innerHTML = `€ ${itemPrice} <span class="fa fa-cart-plus"></span>`;
+              addOrRemoveButton.innerHTML = `€ ${itemPrice} <span class="fa fa-cart-plus home-page__cart-add"></span>`;
             } else {
               cartBox.style.opacity = "1";
               addOrRemoveButton.style.backgroundColor = !isAdded
