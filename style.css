@@ -256,7 +256,7 @@
   -webkit-box-shadow: 1px 1px 1px;
           box-shadow: 1px 1px 1px;
   text-align: center;
-  font-size: 14px;
+  font-size: 16px;
   margin-bottom: 30px;
   margin-top: 15px;
   width: 70%;
@@ -790,6 +790,12 @@
   background-color: #4e4e50;
 }
 
+@media only screen and (min-width: 450px) {
+  .cart-page__payment-modal-content {
+    margin: 5% auto;
+  }
+}
+
 .cart-page__payment-modal-button-wrapper {
   margin: 30px;
 }
@@ -926,14 +932,6 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
-  background: url("./images/3.jpeg") fixed no-repeat center;
-  background-size: cover;
-}
-
-@media only screen and (max-width: 450px) {
-  body {
-    background-size: auto;
-  }
 }
 
 .main-wrapper {
@@ -950,6 +948,8 @@ body {
 }
 
 .page-image {
+  background: url("./images/3.jpeg") no-repeat center;
+  background-size: cover;
   z-index: -1;
   position: fixed;
   top: 0;

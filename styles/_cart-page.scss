@@ -161,6 +161,9 @@
     width: 60%;
     border-radius: 5px;
     background-color: $backgroundGray;
+    @include responsive(phone-land) {
+      margin: 5% auto;
+    }
   }
   &__payment-modal-button-wrapper {
     margin: 30px;
